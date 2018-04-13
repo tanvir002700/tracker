@@ -75,8 +75,8 @@ WSGI_APPLICATION = 'office_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tracker',
-        'USER': 'developer',
+        'NAME': 'traker',
+        'USER': 'django',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
