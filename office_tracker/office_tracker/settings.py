@@ -50,6 +50,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'office_tracker.urls'
+AUTH_USER_MODEL = 'accounts.User'
 
 TEMPLATES = [
     {
