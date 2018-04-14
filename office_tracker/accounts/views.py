@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from .forms import RegistrationForm
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
 from django.urls import reverse
 
 
@@ -25,6 +26,9 @@ class LoginView(LoginView):
 
   def get_success_url(self):
     return reverse('accounts:detail')
+
+class LogoutView(LogoutView):
+  template_name = 'accounts/logout.html'
 
 
 class AccountDetailView(TemplateView):
