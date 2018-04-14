@@ -7,3 +7,10 @@ class RegistrationForm(UserCreationForm):
     model = User
     fields = ('username', 'email')
 
+  def save(self, commit=True):
+    if not self.is_valid():
+      return None
+    user = super(RegistrationForm, self).save(commit=False)
+    if commit:
+      user.save()
+    return user
