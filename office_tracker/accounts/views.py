@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from .forms import RegistrationForm
+from django.contrib.auth.views import LoginView
+from django.urls import reverse
 
 
 class RegistrationView(FormView):
@@ -16,6 +18,13 @@ class RegistrationView(FormView):
       return redirect(reverse('accounts:detail'))
     else:
       return render(request, self.template_name, {'form': form})
+
+
+class LoginView(LoginView):
+  template_name = 'accounts/login.html'
+
+  def get_success_url(self):
+    return reverse('accounts:detail')
 
 
 class AccountDetailView(TemplateView):
