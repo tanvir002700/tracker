@@ -15,9 +15,9 @@ class RegistrationView(FormView):
     if user:
       return redirect(reverse('accounts:detail'))
     else:
-      print("Came here................")
       return render(request, self.template_name, {'form': form})
 
 
 class AccountDetailView(TemplateView):
   template_name = 'accounts/account_detail.html'
+
