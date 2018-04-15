@@ -4,5 +4,5 @@ from core.models import TimeStampedModel
 
 
 class User(AbstractUser, TimeStampedModel):
-  date_of_birth = models.DateField(null=True)
+    date_of_birth = models.DateField(null=True)
 
