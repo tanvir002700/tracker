@@ -28,7 +28,9 @@ class LoginView(LoginView):
     return reverse('accounts:detail')
 
 class LogoutView(LogoutView):
-  template_name = 'accounts/logout.html'
+    template_name = 'accounts/logout.html'
+    def get_next_page(self):
+        return reverse('accounts:login')
 
 
 class AccountDetailView(TemplateView):
