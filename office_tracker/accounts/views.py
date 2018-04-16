@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
-from django.urls import reverse
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse, reverse_lazy
 from .forms import RegistrationForm
 
 
@@ -40,7 +40,18 @@ class AccountDetailView(TemplateView):
 
 class PasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'
+    email_template_name = 'accounts/password_reset_email.html'
+    success_url = reverse_lazy('accounts:password_reset_done')
 
 
 class PasswordResetDoneView(PasswordResetDoneView):
     template_name = 'accounts/password_reset_done.html'
+
+
+class PasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/passowrd_reset_confirm.html'
+
+
+
+class PasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'accounts/password_reset_complete.html'
