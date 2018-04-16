@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.urls import reverse
 from .forms import RegistrationForm
 
@@ -40,3 +40,7 @@ class AccountDetailView(TemplateView):
 
 class PasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'
+
+
+class PasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'accounts/password_reset_done.html'
