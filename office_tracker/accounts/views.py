@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse
 from .forms import RegistrationForm
 
@@ -37,3 +37,6 @@ class LogoutView(LogoutView):
 class AccountDetailView(TemplateView):
     template_name = 'accounts/account_detail.html'
 
+
+class PasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset.html'
