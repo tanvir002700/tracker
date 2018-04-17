@@ -6,6 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView,\
                                       PasswordResetConfirmView,\
                                       PasswordResetCompleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.detail import DetailView
 from .forms import RegistrationForm
 
 
@@ -35,8 +37,12 @@ class LogoutView(LogoutView):
         return reverse('accounts:login')
 
 
-class AccountDetailView(TemplateView):
+class AccountDetailView(LoginRequiredMixin, DetailView):
     template_name = 'accounts/account_detail.html'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class PasswordResetView(PasswordResetView):
