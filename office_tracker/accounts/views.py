@@ -45,6 +45,10 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
         return self.request.user
 
 
+class AccountUpdateView():
+    pass
+
+
 class PasswordResetView(PasswordResetView):
     template_name = 'accounts/password_reset.html'
     email_template_name = 'accounts/password_reset_email.html'
