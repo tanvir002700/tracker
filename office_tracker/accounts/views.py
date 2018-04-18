@@ -8,6 +8,8 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView,\
                                       PasswordResetCompleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.forms import UserChangeForm
 from .forms import RegistrationForm
 
 
@@ -45,8 +47,15 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
         return self.request.user
 
 
-class AccountUpdateView():
-    pass
+class AccountUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'accounts/update.html'
+    form_class = UserChangeForm
+
+    def get_success_url(self):
+        return reverse_lazy('accounts/account_detail')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class PasswordResetView(PasswordResetView):
