@@ -40,7 +40,7 @@ class LogoutView(LogoutView):
 
 
 class AccountDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'accounts/account_detail.html'
+    template_name = 'accounts/detail.html'
     context_object_name = 'user'
 
     def get_object(self, queryset=None):
