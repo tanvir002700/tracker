@@ -52,7 +52,7 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserChangeForm
 
     def get_success_url(self):
-        return reverse_lazy('accounts/account_detail')
+        return reverse('accounts:detail')
 
     def get_object(self, queryset=None):
         return self.request.user
