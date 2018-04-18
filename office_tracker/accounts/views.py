@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.forms import UserChangeForm
-from .forms import RegistrationForm
+from .forms import RegistrationForm, AccountUpdateForm
 
 
 class RegistrationView(FormView):
@@ -49,7 +49,7 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
 
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'accounts/update.html'
-    form_class = UserChangeForm
+    form_class = AccountUpdateForm
 
     def get_success_url(self):
         return reverse('accounts:detail')
