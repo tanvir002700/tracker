@@ -4,5 +4,6 @@ from accounts.models import User
 
 
 class Attandance(TimeStampedModel):
-    enter_at = models.DateTimeField(null=False)
+    enter_at = models.DateTimeField(null=True)
     out_at = models.DateTimeField(null=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
