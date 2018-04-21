@@ -27,16 +27,11 @@ class RegistrationView(FormView):
 
 
 class LoginView(LoginView):
+    redirect_authenticated_user = True
     template_name = 'accounts/login.html'
 
     def get_success_url(self):
         return reverse('accounts:detail')
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_anonymous:
-            return redirect(reverse('accounts:detail'))
-
-        return self.render_to_response(self.get_context_data())
 
 
 class LogoutView(LogoutView):
