@@ -19,7 +19,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url('^accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    url('^daily_attandance/', include(('daily_attandance.urls', 'daily_attandance'), namespace='daily_attandance')),
+    url('^daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
     url(r'^admin/', admin.site.urls)
 ]
 

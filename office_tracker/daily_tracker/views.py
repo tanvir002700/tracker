@@ -10,3 +10,4 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         print("come here")
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
+

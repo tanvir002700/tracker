@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('daily_attandance', '0001_initial'),
+        ('daily_tracker', '0001_initial'),
     ]
 
     operations = [
