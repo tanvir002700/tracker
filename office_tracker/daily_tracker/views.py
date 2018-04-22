@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
+from .models import Attandance
 
 
 class DailyLoginView(LoginRequiredMixin, RedirectView):
@@ -9,5 +11,7 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         print("come here")
+        attandance = Attandance(enter_at=timezone.now(), user=self.request.user)
+        attandance.save()
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
 
