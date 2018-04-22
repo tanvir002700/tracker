@@ -11,8 +11,6 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
-        print("status ------------------------->")
-        print(user.is_active_login())
         if user.is_active_login() == False:
             attandance = Attandance(enter_at=timezone.now(), user=self.request.user)
             attandance.save()
