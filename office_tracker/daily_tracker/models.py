@@ -8,3 +8,5 @@ class Attandance(TimeStampedModel):
     out_at = models.DateTimeField(null=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
+    def is_logged_in(self):
+        return self.out_at is None
