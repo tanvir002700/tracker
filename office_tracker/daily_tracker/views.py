@@ -16,3 +16,6 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
             attandance.save()
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
 
+
+class DailyLogoutView(LoginRequiredMixin, RedirectView):
+    url = reverse_lazy('accounts:detail')
