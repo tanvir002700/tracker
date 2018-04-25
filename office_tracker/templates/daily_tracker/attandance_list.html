@@ -1,0 +1,9 @@
+<h1>Attandance</h1>
+<ul>
+{% for attandance in object_list %}
+    <li>{{ attandance.enter_at }} - {{ attandance.out_at }}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>
+

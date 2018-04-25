@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import RedirectView
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from .models import Attandance
@@ -27,4 +28,10 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
             attandance.out_at = timezone.now()
             attandance.save()
         return super(DailyLogoutView, self).get_login_url(*args, **kwargs)
+
+
+
+class AttandanceListView(ListView):
+    template_name = 'daily_tracker/attandance_list.html'
+    model = Attandance
 
