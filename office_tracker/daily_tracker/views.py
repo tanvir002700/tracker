@@ -8,7 +8,7 @@ from .models import Attandance
 
 
 class DailyLoginView(LoginRequiredMixin, RedirectView):
-    url = reverse_lazy('accounts:detail')
+    url = reverse_lazy('daily_tracker:attandance_list')
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
@@ -19,7 +19,7 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
 
 
 class DailyLogoutView(LoginRequiredMixin, RedirectView):
-    url = reverse_lazy('accounts:detail')
+    url = reverse_lazy('daily_tracker:attandance_list')
 
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
@@ -27,7 +27,7 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
             attandance = user.attandance_set.last()
             attandance.out_at = timezone.now()
             attandance.save()
-        return super(DailyLogoutView, self).get_login_url(*args, **kwargs)
+        return super(DailyLogoutView, self).get_redirect_url(*args, **kwargs)
 
 
 
