@@ -19,3 +19,12 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
 
 class DailyLogoutView(LoginRequiredMixin, RedirectView):
     url = reverse_lazy('accounts:detail')
+
+    def get_redirect_url(self, *args, **kwargs):
+        user = self.request.user
+        if user.is_active_login() == True:
+            attandance = user.attandance_set.last()
+            attandance.out_at = timezone.now()
+            attandance.save()
+        return super(DailyLogoutView, self).get_login_url(*args, **kwargs)
+
