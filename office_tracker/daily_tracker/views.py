@@ -35,3 +35,8 @@ class AttandanceListView(ListView):
     template_name = 'daily_tracker/attandance_list.html'
     model = Attandance
 
+    def get_queryset(self):
+        self.queryset = self.request.user.attandance_set.all()
+        return super(AttandanceListView, self).get_queryset()
+
+
