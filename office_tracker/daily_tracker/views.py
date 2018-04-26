@@ -31,6 +31,9 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
             attandance = user.attandance_set.last()
             attandance.out_at = timezone.now()
             attandance.save()
+            messages.add_message(self.request, messages.INFO, 'successfully logged out')
+        else:
+            messages.add_message(self.request, messages.INFO, 'There is no active login')
         return super(DailyLogoutView, self).get_redirect_url(*args, **kwargs)
 
 
