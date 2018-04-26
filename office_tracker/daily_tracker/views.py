@@ -3,6 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.base import RedirectView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.utils import timezone
 from .models import Attandance
 
@@ -15,6 +16,9 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
         if user.is_active_login() == False:
             attandance = Attandance(enter_at=timezone.now(), user=self.request.user)
             attandance.save()
+            messages.add_message(self.request, messages.INFO, 'login succees')
+        else:
+            messages.add_message(self.request, messages.INFO, 'already logged in')
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
 
 
