@@ -1,8 +1,8 @@
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 
-from .models import User
-from .views import AccountDetailView
+from accounts.models import User
+from accounts.views import AccountDetailView
 
 
 class SimpleTest(TestCase):
