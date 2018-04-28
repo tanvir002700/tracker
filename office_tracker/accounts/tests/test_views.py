@@ -25,8 +25,9 @@ class SimpleTest(TestCase):
             'email': 'test@email.com',
             'password1': '$password_1234',
             'password2': '$password_1234',
-        })
-        self.assertEqual(response.status_code, 302)
+        }, follow=True)
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/accounts/detail/',
+                             status_code=302, target_status_code=200)
         self.assertEqual(User.objects.count(), 2)
 
     def test_login_get(self):
