@@ -38,6 +38,12 @@ class SimpleTest(TestCase):
         response = self.client.post(reverse('accounts:login'), **self.credentials, follow=True)
         self.assertEqual(response.status_code, 200)
 
+    def test_logout(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('accounts:logout'))
+        self.assertEqual(response.status_code, 302)
+
     def test_details(self):
         request = self.factory.get('/accounts/detail')
         request.user = self.user
