@@ -3,7 +3,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 
 from accounts.models import User
-from accounts.views import AccountDetailView, LoginView
+from accounts.views import AccountDetailView, AccountUpdateView
 
 
 class SimpleTest(TestCase):
@@ -50,4 +50,25 @@ class SimpleTest(TestCase):
 
         response = AccountDetailView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_update_get(self):
+        request = self.factory.get('/accounts/update')
+        request.user = self.user
+
+        response = AccountUpdateView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_post(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.post(reverse('accounts:update'), {
+            'first_name': 'change',
+            'last_name': 'change',
+            'email': 'email@email.com'
+        })
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.first_name, 'change')
+        self.assertEqual(self.user.last_name, 'change')
+        self.assertEqual(self.user.email, 'email@email.com')
+        self.assertRedirects(response, expected_url=reverse('accounts:detail'), status_code=302, target_status_code=200)
 
