@@ -17,3 +17,6 @@ GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 \q
 
 exit
+
+# run test
+python manage.py test --pattern='test_*.py'
