@@ -42,7 +42,7 @@ class SimpleTest(TestCase):
         self.client.login(**self.credentials)
 
         response = self.client.get(reverse('accounts:logout'))
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, expected_url=reverse('accounts:login'), status_code=302, target_status_code=200)
 
     def test_details(self):
         request = self.factory.get('/accounts/detail')
