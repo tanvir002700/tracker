@@ -19,6 +19,7 @@ class RegisterViewTest(TestCase):
     def test_get(self):
         response = self.client.get(reverse('accounts:registration'))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'csrfmiddlewaretoken')
 
     def test_post(self):
         response = self.client.post(reverse('accounts:registration'), {
@@ -37,6 +38,7 @@ class LoginViewTest(TestMixing, TestCase):
     def test_get(self):
         response = self.client.get(reverse('accounts:login'))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'csrfmiddlewaretoken')
 
     def test_post(self):
         response = self.client.post(reverse('accounts:login'), **self.credentials, follow=True)
@@ -67,6 +69,7 @@ class UpdateViewTest(TestMixing, TestCase):
 
         response = AccountUpdateView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'csrfmiddlewaretoken')
 
     def test_post(self):
         self.client.login(**self.credentials)
