@@ -14,8 +14,8 @@ class TestMixing(object):
             'password': 'top_secret'
         }
 
-class SimpleTest(TestMixing, TestCase):
 
+class RegisterViewTest(TestCase):
     def test_registration_get(self):
         response = self.client.get(reverse('accounts:registration'))
         self.assertEqual(response.status_code, 200)
@@ -29,22 +29,28 @@ class SimpleTest(TestMixing, TestCase):
         }, follow=True)
         self.assertRedirects(response, expected_url='/accounts/login/?next=/accounts/detail/',
                              status_code=302, target_status_code=200)
-        self.assertEqual(User.objects.count(), 2)
+        self.assertEqual(User.objects.count(), 1)
 
-    def test_login_get(self):
+class LoginViewTest(TestMixing, TestCase):
+
+    def test_get(self):
         response = self.client.get(reverse('accounts:login'))
         self.assertEqual(response.status_code, 200)
 
-    def test_login_post(self):
+    def test_post(self):
         response = self.client.post(reverse('accounts:login'), **self.credentials, follow=True)
         self.assertEqual(response.status_code, 200)
 
+
+class LogoutViewTest(TestMixing, TestCase):
     def test_logout(self):
         self.client.login(**self.credentials)
 
         response = self.client.get(reverse('accounts:logout'))
         self.assertRedirects(response, expected_url=reverse('accounts:login'), status_code=302, target_status_code=200)
 
+
+class DetailViewTest(TestMixing, TestCase):
     def test_details(self):
         request = self.factory.get('/accounts/detail')
         request.user = self.user
@@ -52,6 +58,8 @@ class SimpleTest(TestMixing, TestCase):
         response = AccountDetailView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
+
+class UpdateViewTest(TestMixing, TestCase):
     def test_update_get(self):
         request = self.factory.get('/accounts/update')
         request.user = self.user
