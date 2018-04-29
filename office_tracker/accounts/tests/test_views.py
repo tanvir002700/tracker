@@ -16,11 +16,11 @@ class TestMixing(object):
 
 
 class RegisterViewTest(TestCase):
-    def test_registration_get(self):
+    def test_get(self):
         response = self.client.get(reverse('accounts:registration'))
         self.assertEqual(response.status_code, 200)
 
-    def test_registration_post(self):
+    def test_post(self):
         response = self.client.post(reverse('accounts:registration'), {
             'username': 'test',
             'email': 'test@email.com',
@@ -30,6 +30,7 @@ class RegisterViewTest(TestCase):
         self.assertRedirects(response, expected_url='/accounts/login/?next=/accounts/detail/',
                              status_code=302, target_status_code=200)
         self.assertEqual(User.objects.count(), 1)
+
 
 class LoginViewTest(TestMixing, TestCase):
 
@@ -43,7 +44,7 @@ class LoginViewTest(TestMixing, TestCase):
 
 
 class LogoutViewTest(TestMixing, TestCase):
-    def test_logout(self):
+    def test_get(self):
         self.client.login(**self.credentials)
 
         response = self.client.get(reverse('accounts:logout'))
@@ -51,7 +52,7 @@ class LogoutViewTest(TestMixing, TestCase):
 
 
 class DetailViewTest(TestMixing, TestCase):
-    def test_details(self):
+    def test_get(self):
         request = self.factory.get('/accounts/detail')
         request.user = self.user
 
@@ -60,14 +61,14 @@ class DetailViewTest(TestMixing, TestCase):
 
 
 class UpdateViewTest(TestMixing, TestCase):
-    def test_update_get(self):
+    def test_get(self):
         request = self.factory.get('/accounts/update')
         request.user = self.user
 
         response = AccountUpdateView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
-    def test_update_post(self):
+    def test_post(self):
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('accounts:update'), {
@@ -80,4 +81,5 @@ class UpdateViewTest(TestMixing, TestCase):
         self.assertEqual(self.user.last_name, 'change')
         self.assertEqual(self.user.email, 'email@email.com')
         self.assertRedirects(response, expected_url=reverse('accounts:detail'), status_code=302, target_status_code=200)
+
 
