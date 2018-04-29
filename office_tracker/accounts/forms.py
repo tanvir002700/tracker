@@ -4,6 +4,7 @@ from django import forms
 from .models import User
 
 class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
     class Meta:
         model = User
         fields = ('username', 'email')
