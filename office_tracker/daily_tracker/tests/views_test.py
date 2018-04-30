@@ -29,3 +29,10 @@ class DailyLoginViewTest(TestMixing, TestCase):
 
         self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/login/',
                              status_code=302, target_status_code=200)
+
+    def test_multiple_login(self):
+        self.client.login(**self.credentials)
+        self.client.get(reverse('daily_tracker:login'))
+
+        response = self.client.get(reverse('daily_tracker:login'))
+        self.assertEqual(self.user.attandance_set.count(), 1)
