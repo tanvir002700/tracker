@@ -21,4 +21,11 @@ class DailyLoginViewTest(TestMixing, TestCase):
         self.client.login(**self.credentials)
         response = self.client.get(reverse('daily_tracker:login'))
 
-        self.assertRedirects(response, expected_url=reverse('daily_tracker:attandance_list'), status_code=302, target_status_code=200)
+        self.assertRedirects(response, expected_url=reverse('daily_tracker:attandance_list'),
+                             status_code=302, target_status_code=200)
+
+    def test_when_user_not_logged_in(self):
+        response = self.client.get(reverse('daily_tracker:login'))
+
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/login/',
+                             status_code=302, target_status_code=200)
