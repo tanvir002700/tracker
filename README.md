@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/tanvir002700/tracker.svg?branch=master)](https://travis-ci.org/tanvir002700/tracker)
 # tracker
 
 ## Database setup
