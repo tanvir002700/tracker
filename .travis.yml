@@ -3,3 +3,5 @@ python:
   - "3.6"
 script:
   - cd office_tracker && coverage run  manage.py test --pattern='*test.py' && cd -
+after_success:
+  - coveralls
