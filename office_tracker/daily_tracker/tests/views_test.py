@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
+from django.utils import timezone
 
 from accounts.models import User
 from daily_tracker.views import DailyLoginView
@@ -38,3 +39,12 @@ class DailyLoginViewTest(TestMixing, TestCase):
 
         response = self.client.get(reverse('daily_tracker:login'))
         self.assertEqual(self.user.attandance_set.count(), 1)
+
+
+class DailyLogoutViewTest(TestMixing, TestCase):
+    def test_when_user_logged_in(self):
+        self.user.attandance_set.create(enter_at=timezone.now())
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('daily_tracker:logout'))
+        self.assertFalse(self.user.is_active_login())
