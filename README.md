@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/tanvir002700/tracker.svg?branch=master)](https://travis-ci.org/tanvir002700/tracker)
+[![Coverage Status](https://coveralls.io/repos/github/tanvir002700/tracker/badge.svg?branch=master)](https://coveralls.io/github/tanvir002700/tracker?branch=master)
 # tracker
 
 ## Database setup
