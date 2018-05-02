@@ -74,6 +74,11 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/static/',
+]
+
 WSGI_APPLICATION = 'office_tracker.wsgi.application'
 
 
