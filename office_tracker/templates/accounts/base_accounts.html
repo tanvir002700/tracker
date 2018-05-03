@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block nav-bar %}
+    {% if user.is_authenticated %}
+        {% include 'main_nav.html' %}
+    {% else %}
+        {% include 'auth_nav.html' %}
+    {% endif %}
+{% endblock nav-bar %}
+
