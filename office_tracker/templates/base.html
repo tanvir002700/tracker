@@ -8,16 +8,20 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+
         {% block head_content %}
         {% endblock head_content %}
+
         <title>{% block head_title %}Django{% endblock head_title %}</title>
     </head>
 
     <body>
+        {% block nav-bar %}
+        {% endblock nav-bar %}
 
         <div class="container">
-        {% block body %}
-        {% endblock body %}
+            {% block body %}
+            {% endblock body %}
         </div>
 
         <script src="{% static 'javascript/bootstrap.min.js' %}"></script>
