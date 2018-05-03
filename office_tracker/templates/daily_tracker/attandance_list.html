@@ -1,25 +1,29 @@
-<h1>Attandance</h1>
+{% extends 'layout.html' %}
 
-{% if messages %}
-<ul class="messages">
-{% for message in messages %}
-    <li id="message_{{ forloop.counter }}"
-    {% if message.tags %} class="{{ message.tags }}"
-    .
-    {% endif %}>
-    {{ message }}
-    </li>
-{% endfor %}
-</ul>
-{% endif %}
+{% block body %}
+    <h1>Attandance</h1>
 
-<ol>
-{% for attandance in object_list %}
-    <li>{{ attandance.enter_at }} - {{ attandance.out_at }}</li>
-{% empty %}
-    <li>No articles yet.</li>
-{% endfor %}
-</ol>
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li id="message_{{ forloop.counter }}"
+        {% if message.tags %} class="{{ message.tags }}"
+        .
+        {% endif %}>
+        {{ message }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
 
-<a href="{% url 'daily_tracker:login' %}">Login</a>
-<a href="{% url 'daily_tracker:logout' %}">Logout</a>
+    <ol>
+    {% for attandance in object_list %}
+        <li>{{ attandance.enter_at }} - {{ attandance.out_at }}</li>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </ol>
+
+    <a href="{% url 'daily_tracker:login' %}" class='btn btn-success'>Login</a>
+    <a href="{% url 'daily_tracker:logout' %}" class='btn btn-danger'>Logout</a>
+{% endblock body %}
