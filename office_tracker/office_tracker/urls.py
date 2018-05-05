@@ -20,6 +20,7 @@ from django.contrib import admin
 urlpatterns = [
     url('^accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     url('^daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
+    url('^leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
     url(r'^admin/', admin.site.urls)
 ]
 
