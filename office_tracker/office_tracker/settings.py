@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'daily_tracker',
+    'leave_tracker',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
