@@ -1,14 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{message.tags}}">
-                {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+    {% include 'flash.html' %}
 
     <h1>Attandance</h1>
 
