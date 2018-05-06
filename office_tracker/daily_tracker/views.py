@@ -42,9 +42,10 @@ class AttandanceListView(ListView):
     template_name = 'daily_tracker/attandance_list.html'
     model = Attandance
     paginate_by = 10
+    ordering = ['enter_at']
 
     def get_queryset(self):
-        self.queryset = self.request.user.attandance_set.all()
+        self.queryset = self.request.user.attandance_set.all().reverse()
         return super(AttandanceListView, self).get_queryset()
 
 
