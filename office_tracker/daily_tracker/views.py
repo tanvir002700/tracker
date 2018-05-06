@@ -42,7 +42,7 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
 class AttandanceListView(ListView):
     template_name = 'daily_tracker/attandance_list.html'
     model = Attandance
-    paginate_by = 10
+    paginate_by = 20
     ordering = ['enter_at']
 
     def get_queryset(self):
