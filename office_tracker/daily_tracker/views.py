@@ -18,7 +18,8 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
             attandance.save()
             messages.add_message(self.request, messages.INFO, 'login succees')
         else:
-            messages.add_message(self.request, messages.INFO, 'already logged in')
+            print(messages.WARNING)
+            messages.add_message(self.request, messages.WARNING, 'already logged in', 'danger')
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
 
 
@@ -33,7 +34,7 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
             attandance.save()
             messages.add_message(self.request, messages.INFO, 'successfully logged out')
         else:
-            messages.add_message(self.request, messages.INFO, 'There is no active login')
+            messages.add_message(self.request, messages.INFO, 'There is no active login', 'danger')
         return super(DailyLogoutView, self).get_redirect_url(*args, **kwargs)
 
 

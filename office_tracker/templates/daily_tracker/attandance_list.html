@@ -1,42 +1,40 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>Attandance</h1>
-    <a href="{% url 'daily_tracker:login' %}" class='btn btn-success'>Login</a>
-    <a href="{% url 'daily_tracker:logout' %}" class='btn btn-danger'>Logout</a>
-    <table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Enter at</th>
-            <th scope="col">Out at</th>
-            <th scope="col">Total time</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for attandance in object_list %}
-            <tr class="{% cycle 'active' 'info' %}">
-                <td>{{ attandance.enter_at }}</td>
-                <td>{{ attandance.out_at }}</td>
-                <td>@mdo</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-    </table>
-{% include 'pagination.html' %}
 
 {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li id="message_{{ forloop.counter }}"
-            {% if message.tags %} class="{{ message.tags }}"
-            .
-            {% endif %}>
-            {{ message }}
-            </li>
-        {% endfor %}
-    </ul>
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+                {{ message }}
+        </div>
+    {% endfor %}
 {% endif %}
 
+    <h1>Attandance</h1>
 
+    <a href="{% url 'daily_tracker:login' %}" class='btn btn-success'>Login</a>
+    <a href="{% url 'daily_tracker:logout' %}" class='btn btn-danger'>Logout</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Enter at</th>
+                <th scope="col">Out at</th>
+                <th scope="col">Total time</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for attandance in object_list %}
+                <tr class="{% cycle 'active' 'info' %}">
+                    <td>{{ attandance.enter_at }}</td>
+                    <td>{{ attandance.out_at }}</td>
+                    <td>@mdo</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'pagination.html' %}
 {% endblock body %}
 
