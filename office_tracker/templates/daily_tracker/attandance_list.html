@@ -2,31 +2,41 @@
 
 {% block body %}
     <h1>Attandance</h1>
-
-    {% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-        <li id="message_{{ forloop.counter }}"
-        {% if message.tags %} class="{{ message.tags }}"
-        .
-        {% endif %}>
-        {{ message }}
-        </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-
-    <ol>
-    {% for attandance in object_list %}
-        <li>{{ attandance.enter_at }} - {{ attandance.out_at }}</li>
-    {% empty %}
-        <li>No articles yet.</li>
-    {% endfor %}
-    </ol>
-
     <a href="{% url 'daily_tracker:login' %}" class='btn btn-success'>Login</a>
     <a href="{% url 'daily_tracker:logout' %}" class='btn btn-danger'>Logout</a>
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Enter at</th>
+            <th scope="col">Out at</th>
+            <th scope="col">Total time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attandance in object_list %}
+            <tr class="{% cycle 'active' 'info' %}">
+                <td>{{ attandance.enter_at }}</td>
+                <td>{{ attandance.out_at }}</td>
+                <td>@mdo</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% include 'pagination.html' %}
 
-    {% include 'pagination.html' %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li id="message_{{ forloop.counter }}"
+            {% if message.tags %} class="{{ message.tags }}"
+            .
+            {% endif %}>
+            {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
 {% endblock body %}
 
