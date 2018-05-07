@@ -12,3 +12,5 @@ class Attandance(TimeStampedModel):
     def is_logged_in(self):
         return self.out_at is None
 
+    def calculate_total_time(self):
+        pass

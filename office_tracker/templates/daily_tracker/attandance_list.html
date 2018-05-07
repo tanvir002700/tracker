@@ -22,7 +22,7 @@
                 <tr class="{% cycle 'active' 'info' %}">
                     <td>{{ attandance.enter_at }}</td>
                     <td>{{ attandance.out_at }}</td>
-                    <td>@mdo</td>
+                    <td>{{ attandance.total_time }}</td>
                 </tr>
             {% endfor %}
         </tbody>
