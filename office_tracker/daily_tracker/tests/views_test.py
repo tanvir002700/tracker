@@ -4,7 +4,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
 from accounts.models import User
-from daily_tracker.views import DailyLoginView
+from daily_tracker.views import DailyLoginView, AttandanceListView
 
 
 class TestMixing(object):
@@ -48,3 +48,14 @@ class DailyLogoutViewTest(TestMixing, TestCase):
 
         response = self.client.get(reverse('daily_tracker:logout'))
         self.assertFalse(self.user.is_active_login())
+
+
+class AttandanceListViewTest(TestMixing, TestCase):
+    def test_one_entry(self):
+        request = self.factory.get('/daily_tracker/attandance_list')
+        request.user = self.user
+        attandance = self.user.attandance_set.create(enter_at=timezone.now())
+
+        response = AttandanceListView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
