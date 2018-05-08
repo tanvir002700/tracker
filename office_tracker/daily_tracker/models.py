@@ -2,6 +2,7 @@ from django.db import models
 from core.models import TimeStampedModel
 from accounts.models import User
 from django.utils import timezone
+from datetime import timedelta
 
 
 class Attandance(TimeStampedModel):
@@ -23,6 +24,10 @@ class Attandance(TimeStampedModel):
             self.out_at = timezone.now()
             self.save()
 
-    def calculate_total_time(self):
-        enter = self.enter_at
-        out = self.out_at
+    def update_total_time(self):
+        enter_date = self.enter_at.date()
+        out_date = self.out_at.date()
+        self.total_time = (out_date - enter_date).total_seconds()
+        if enter_date == out_date:
+            self.total_time = timedelta(hours=2).total_seconds()
+        self.save()
