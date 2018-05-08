@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import TimeStampedModel
 from accounts.models import User
+from django.utils import timezone
 
 
 class Attandance(TimeStampedModel):
@@ -12,5 +13,16 @@ class Attandance(TimeStampedModel):
     def is_logged_in(self):
         return self.out_at is None
 
+    def login(self):
+        if self.enter_at is None:
+            self.enter_at = timezone.now()
+            self.save()
+
+    def logout(self):
+        if self.out_at is None:
+            self.out_at = timezone.now()
+            self.save()
+
     def calculate_total_time(self):
-        pass
+        enter = self.enter_at
+        out = self.out_at
