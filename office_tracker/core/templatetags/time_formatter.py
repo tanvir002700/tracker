@@ -3,6 +3,6 @@ import datetime
 
 register = template.Library()
 
-@register.filter(name='duration')
+@register.filter
 def duration(seconds):
     return str(datetime.timedelta(seconds=seconds))
