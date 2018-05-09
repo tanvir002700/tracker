@@ -31,3 +31,10 @@ class AttandanceTest(TestMixing, TestCase):
         attandance.login()
 
         self.assertTrue(attandance.is_logged_in())
+
+    def test_logout_method(self):
+        attandance = Attandance(enter_at=timezone.now())
+        attandance.logout()
+
+        self.assertFalse(attandance.is_logged_in())
+        self.assertNotEqual(attandance.total_time, 0)
