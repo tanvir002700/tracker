@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.filter(name='duration')
 def duration(seconds):
-    return str(seconds)
+    return str(datetime.timedelta(seconds=seconds))
