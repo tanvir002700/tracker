@@ -25,3 +25,9 @@ class AttandanceTest(TestMixing, TestCase):
         attandance = Attandance(enter_at=timezone.now(), out_at=timezone.now(), user=self.user)
 
         self.assertFalse(attandance.is_logged_in())
+
+    def test_login_method(self):
+        attandance = Attandance()
+        attandance.login()
+
+        self.assertTrue(attandance.is_logged_in())
