@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+    {% load duration %}
     {% include 'flash.html' %}
 
     <h1>Attandance</h1>
@@ -22,7 +23,7 @@
                 <tr class="{% cycle 'active' 'info' %}">
                     <td>{{ attandance.enter_at }}</td>
                     <td>{{ attandance.out_at }}</td>
-                    <td>{{ attandance.total_time }}</td>
+                    <td>{{ attandance.total_time|duration }}</td>
                 </tr>
             {% endfor %}
         </tbody>
