@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils import timezone
 from .models import Attandance
+from datetime import datetime, date
 
 
 class DailyLoginView(LoginRequiredMixin, RedirectView):
@@ -18,7 +19,6 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
             attandance.save()
             messages.add_message(self.request, messages.INFO, 'login succees')
         else:
-            print(messages.WARNING)
             messages.add_message(self.request, messages.WARNING, 'already logged in', 'danger')
         return super(DailyLoginView, self).get_redirect_url(*args, **kwargs)
 
@@ -48,4 +48,16 @@ class AttandanceListView(ListView):
         self.queryset = self.request.user.attandance_set.all().reverse()
         return super(AttandanceListView, self).get_queryset()
 
+
+class TodayAttandanceListView(ListView):
+    template_name = 'daily_tracker/attandance_list.html'
+    model = Attandance
+    paginate_by = 20
+    ordering = ['enter_at']
+
+    def get_queryset(self):
+        print("Check time now")
+        print(datetime.date(timezone.now()))
+        self.queryset = Attandance.objects.filter(enter_at=date(2018,5,11)).reverse()
+        return super(TodayAttandanceListView, self).get_queryset()
 
