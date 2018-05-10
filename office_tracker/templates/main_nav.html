@@ -1,6 +1,9 @@
 {% extends 'base/base_nav.html' %}
 
 {% block nav-element-right %}
+    <li>
+        <a href="{% url 'daily_tracker:attandance_list' %}">Attandance List</a>
+    </li>
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profile <span
                 class="caret"></span></a>
