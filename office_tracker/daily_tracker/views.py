@@ -15,7 +15,7 @@ class DailyLoginView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         user = self.request.user
         if user.is_active_login() == False:
-            attandance = Attandance(enter_at=timezone.now(), user=self.request.user)
+            attandance = Attandance(enter_at=timezone.localtime(timezone.now()), user=self.request.user)
             attandance.save()
             messages.add_message(self.request, messages.INFO, 'login succees')
         else:
@@ -56,6 +56,6 @@ class TodayAttandanceListView(ListView):
     ordering = ['enter_at']
 
     def get_queryset(self):
-        self.queryset = Attandance.objects.filter(enter_at__gte=timezone.now().date()).reverse()
+        self.queryset = Attandance.objects.filter(enter_at__gte=timezone.localtime(timezone.now()).date()).reverse()
         return super(TodayAttandanceListView, self).get_queryset()
 
