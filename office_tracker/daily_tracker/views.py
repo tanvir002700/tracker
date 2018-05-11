@@ -56,8 +56,6 @@ class TodayAttandanceListView(ListView):
     ordering = ['enter_at']
 
     def get_queryset(self):
-        print("Check time now")
-        print(datetime.date(timezone.now()))
-        self.queryset = Attandance.objects.filter(enter_at=date(2018,5,11)).reverse()
+        self.queryset = Attandance.objects.filter(enter_at__gte=timezone.now().date()).reverse()
         return super(TodayAttandanceListView, self).get_queryset()
 
