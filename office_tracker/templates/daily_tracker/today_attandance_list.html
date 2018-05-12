@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% load time_formatter %}
+
+{% block body %}
+    {% include 'flash.html' %}
+
+    <h1>Attandance</h1>
+
+    <a href="{% url 'daily_tracker:login' %}" class='btn btn-success'>Login</a>
+    <a href="{% url 'daily_tracker:logout' %}" class='btn btn-danger'>Logout</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Enter at</th>
+                <th scope="col">Out at</th>
+                <th scope="col">Total time</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for attandance in object_list %}
+                <tr class="{% cycle 'active' 'info' %}">
+                    <td>{{ attandance.user.email }}</td>
+                    <td>{{ attandance.enter_at }}</td>
+                    <td>{{ attandance.out_at }}</td>
+                    <td>{{ attandance.total_time|duration }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'pagination.html' %}
+{% endblock body %}
+

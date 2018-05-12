@@ -50,12 +50,12 @@ class AttandanceListView(ListView):
 
 
 class TodayAttandanceListView(ListView):
-    template_name = 'daily_tracker/attandance_list.html'
+    template_name = 'daily_tracker/today_attandance_list.html'
     model = Attandance
     paginate_by = 20
     ordering = ['enter_at']
 
     def get_queryset(self):
-        self.queryset = Attandance.objects.filter(enter_at__gte=timezone.now().date()).reverse()
+        self.queryset = Attandance.objects.filter(enter_at__gte=timezone.localtime(timezone.now()).date()).reverse()
         return super(TodayAttandanceListView, self).get_queryset()
 
