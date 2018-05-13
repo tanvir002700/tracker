@@ -2,6 +2,6 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from .models import Leave
 
-class CreateLeaveView(CreateView):
+class LeaveViewCreateView(CreateView):
     model = Leave
-    template_name = 'leave_tracker/create_leave_form.html'
+    template_name = 'leave_tracker/leave_create_form.html'
