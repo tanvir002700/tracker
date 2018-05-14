@@ -1,0 +1,17 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Leave Type</th>
+            <th scope="col">Leave Reason</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for leave in object_list %}
+            <tr class="{% cycle 'active' 'info' %}">
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.leave_reason }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
