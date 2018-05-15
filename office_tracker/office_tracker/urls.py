@@ -18,9 +18,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url('^accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    url('^daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
-    url('^leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
-    url(r'^admin/', admin.site.urls)
+    url(r'^accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    url(r'^daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
+    url(r'^leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
+    url(r'^admin/', admin.site.urls),
 ]
 
