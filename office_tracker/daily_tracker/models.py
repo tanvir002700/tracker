@@ -25,3 +25,5 @@ class Attandance(TimeStampedModel):
             self.out_at = timezone.now()
             self.save()
 
+    def __str__(self):
+        return 'Enter at ' + str(self.enter_at) + ' Out at ' + str(self.out_at)
