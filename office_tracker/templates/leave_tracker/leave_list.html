@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
+    <h1>Leaves</h1>
+    <a href="{% url 'leave_tracker:create' %}" class='btn btn-success'>Request Leave</a>
     <table class="table">
         <thead>
             <tr>
