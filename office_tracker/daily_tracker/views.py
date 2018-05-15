@@ -38,7 +38,7 @@ class DailyLogoutView(LoginRequiredMixin, RedirectView):
 
 
 
-class AttandanceListView(ListView):
+class AttandanceListView(LoginRequiredMixin, ListView):
     template_name = 'daily_tracker/attandance_list.html'
     model = Attandance
     paginate_by = 20
@@ -49,7 +49,7 @@ class AttandanceListView(ListView):
         return super(AttandanceListView, self).get_queryset()
 
 
-class TodayAttandanceListView(ListView):
+class TodayAttandanceListView(LoginRequiredMixin, ListView):
     template_name = 'daily_tracker/today_attandance_list.html'
     model = Attandance
     paginate_by = 20
