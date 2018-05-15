@@ -31,7 +31,7 @@ class LoginView(LoginView):
     template_name = 'accounts/login.html'
 
     def get_success_url(self):
-        return reverse('accounts:detail')
+        return reverse('root')
 
 
 class LogoutView(LogoutView):
