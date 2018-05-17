@@ -8,6 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/jquery-ui.css' %}">
 
         {% block head_content %}
         {% endblock head_content %}
@@ -25,6 +26,9 @@
         </div>
 
         <script src="{% static 'javascript/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'javascript/jquery-ui.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.min.js' %}"></script>
+        {% block script %}
+        {% endblock script %}
     </body>
 </html>

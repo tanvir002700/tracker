@@ -5,7 +5,7 @@ from django import forms
 
 class LeaveForm(ModelForm):
     leave_reason = forms.CharField(required=True, widget=forms.Textarea)
-    date_from = forms.DateField(widget=forms.SelectDateWidget)
+    date_from = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'}))
     date_to = forms.DateField(widget=forms.SelectDateWidget)
 
     class Meta:
