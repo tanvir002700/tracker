@@ -7,6 +7,8 @@
             <tr>
                 <th scope="col">Leave Type</th>
                 <th scope="col">Leave Reason</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
             </tr>
         </thead>
 
@@ -15,6 +17,8 @@
                 <tr class="{% cycle 'active' 'info' %}">
                     <td>{{ leave.leave_type }}</td>
                     <td>{{ leave.leave_reason }}</td>
+                    <td>{{ leave.date_from }}</td>
+                    <td>{{ leave.date_to }}</td>
                 </tr>
             {% endfor %}
         </tbody>
