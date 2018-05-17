@@ -7,8 +7,11 @@ class Leave(models.Model):
         (SICK_LEAVE, 'Sick Leave'),
         (CAUSAL_LEAVE, 'Causal Leave')
     )
+
     leave_type = models.CharField(max_length=3, choices=LEAVE_TYPE, default=SICK_LEAVE)
     leave_reason = models.TextField()
+    date_from = models.DateField()
+    date_to = models.DateField()
 
     def __str__(self):
         return self.leave_reason
