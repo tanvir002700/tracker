@@ -16,14 +16,14 @@ class LeaveListView(LoginRequiredMixin, ListView):
 
 class LeaveCreateView(LoginRequiredMixin, CreateView):
     model = Leave
-    template_name = 'leave_tracker/leave_create_form.html'
+    template_name = 'leave_tracker/leave_form.html'
     form_class = LeaveForm
     success_url = reverse_lazy('leave_tracker:leave_list')
 
 
 class LeaveUpdateView(LoginRequiredMixin, UpdateView):
     model = Leave
-    template_name = 'leave_tracker/leave_create_form.html'
+    template_name = 'leave_tracker/leave_form.html'
     form_class = LeaveForm
     success_url = reverse_lazy('leave_tracker:leave_list')
 
