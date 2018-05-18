@@ -11,8 +11,8 @@ class Leave(models.Model):
 
     leave_type = models.CharField(max_length=3, choices=LEAVE_TYPE, default=SICK_LEAVE)
     leave_reason = models.TextField()
-    date_from = models.DateField(default=timezone.now())
-    date_to = models.DateField(default=timezone.now())
+    date_from = models.DateField(default=timezone.now)
+    date_to = models.DateField(default=timezone.now)
 
     def __str__(self):
         return self.leave_reason
