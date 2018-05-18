@@ -1,5 +1,8 @@
-<h1>Leave details veiw</h1>
-{{ leave.leave_type }}
-{{ leave.leave_reason }}
-{{ leave.date_from }}
-{{ leave.date_to }}
+{% extends 'layout.html' %}
+{% block body %}
+    <h1>Leave details veiw</h1>
+    {{ leave.leave_type }}
+    {{ leave.leave_reason }}
+    {{ leave.date_from }}
+    {{ leave.date_to }}
+{% endblock body %}
