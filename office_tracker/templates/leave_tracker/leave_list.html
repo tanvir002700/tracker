@@ -21,6 +21,7 @@
                     <td>{{ leave.date_to }}</td>
                     <td>
                         <a href="{% url 'leave_tracker:update' leave.id %}">edit</a>
+                        <a href="{% url 'leave_tracker:delete' leave.id %}">delete</a>
                     </td>
                 </tr>
             {% endfor %}
