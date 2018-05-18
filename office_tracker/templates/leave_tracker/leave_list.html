@@ -19,6 +19,9 @@
                     <td>{{ leave.leave_reason }}</td>
                     <td>{{ leave.date_from }}</td>
                     <td>{{ leave.date_to }}</td>
+                    <td>
+                        <a href="{% url 'leave_tracker:update' leave.id %}">edit</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
