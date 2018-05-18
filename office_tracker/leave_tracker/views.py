@@ -30,6 +30,6 @@ class LeaveUpdateView(LoginRequiredMixin, UpdateView):
 
 class LeaveDeleteView(LoginRequiredMixin, DeleteView):
     model = Leave
-    form_class = LeaveForm
+    template_name = 'leave_tracker/leave_confirm_delete.html'
     success_url = reverse_lazy('leave_tracker:leave_list')
 
