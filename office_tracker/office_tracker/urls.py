@@ -15,14 +15,15 @@ Including another URLconf
 """
 
 from django.conf.urls import url, include
+from django.urls import path
 from django.contrib import admin
 from daily_tracker.views import AttandanceListView
 
 urlpatterns = [
-    url(r'^accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    url(r'^daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
-    url(r'^leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', AttandanceListView.as_view(), name='root')
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
+    url('leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
+    url('admin/', admin.site.urls),
+    url('', AttandanceListView.as_view(), name='root')
 ]
 
