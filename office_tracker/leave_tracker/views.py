@@ -45,7 +45,6 @@ class LeaveUpdateView(LoginRequiredMixin, UpdateView):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
-
 class LeaveDeleteView(LoginRequiredMixin, DeleteView):
     model = Leave
     template_name = 'leave_tracker/leave_confirm_delete.html'
