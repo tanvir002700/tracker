@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from .models import Leave
 from .forms import LeaveForm
+from .viewmixins import LeaveModifyMixin
 
 
 class LeaveListView(LoginRequiredMixin, ListView):
@@ -29,23 +30,15 @@ class LeaveCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('leave_tracker:leave_list')
 
 
-class LeaveUpdateView(LoginRequiredMixin, UpdateView):
+class LeaveUpdateView(LoginRequiredMixin, LeaveModifyMixin, UpdateView):
     model = Leave
     template_name = 'leave_tracker/leave_form.html'
     form_class = LeaveForm
     success_url = reverse_lazy('leave_tracker:leave_list')
     success_message = 'successfully saved!!!!'
 
-    def dispatch(self, request, *args, **kwargs):
-        object = self.get_object()
-        if (object.status != Leave.PENDING):
-            messages.add_message(self.request, messages.WARNING, 'cant update', 'danger')
-            return redirect(reverse_lazy('leave_tracker:leave_list'))
-        messages.add_message(self.request, messages.INFO, 'successfully update')
-        return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
-
-class LeaveDeleteView(LoginRequiredMixin, DeleteView):
+class LeaveDeleteView(LoginRequiredMixin, LeaveModifyMixin, DeleteView):
     model = Leave
     template_name = 'leave_tracker/leave_confirm_delete.html'
     success_url = reverse_lazy('leave_tracker:leave_list')
