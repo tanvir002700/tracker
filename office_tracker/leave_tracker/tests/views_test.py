@@ -17,3 +17,22 @@ class TestMixing(object):
             'password': 'top_secret'
         }
 
+
+class TestLeaveListView(TestCase):
+    pass
+
+
+class TestLeaveDetailView(TestCase):
+    pass
+
+
+class TestLeaveCreateView(TestCase):
+    pass
+
+
+class TestLeaveUpdateView(TestCase):
+    pass
+
+
+class TestLeaveDeleteView(TestCase):
+    pass
