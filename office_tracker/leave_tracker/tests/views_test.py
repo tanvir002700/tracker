@@ -65,9 +65,23 @@ class TestLeaveDetailView(TestMixing, TestCase):
         self.assertTemplateUsed(response,'leave_tracker/leave_detail.html')
 
 
-class TestLeaveCreateView(TestCase):
-    pass
+class TestLeaveCreateView(TestMixing, TestCase):
+    def test_unauthorized_access(self):
+        response = self.client.get(reverse('leave_tracker:create'))
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/leave_tracker/create/',
+                             status_code=302, target_status_code=200)
 
+    def test_authorize_access(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:create'))
+        self.assertTrue(response.status_code, 200)
+    def test_get(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'csrfmiddlewaretoken')
 
 class TestLeaveUpdateView(TestCase):
     pass
