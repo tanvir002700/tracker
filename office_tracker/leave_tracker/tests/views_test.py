@@ -49,6 +49,14 @@ class TestLeaveDetailView(TestMixing, TestCase):
         response = self.client.get(reverse('leave_tracker:detail', kwargs={'pk': self.sick_leave.id}))
         self.assertTrue(response.status_code, 200)
 
+    def test_template_used(self):
+        self.client.login(**self.credentials)
+        self.client.get(reverse('daily_tracker:login'))
+
+        response = self.client.get(reverse('leave_tracker:detail', kwargs={'pk': self.sick_leave.id}))
+        self.assertTemplateUsed(response,'leave_tracker/leave_detail.html')
+
+
 class TestLeaveCreateView(TestCase):
     pass
 
