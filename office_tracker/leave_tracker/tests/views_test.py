@@ -35,6 +35,14 @@ class TestLeaveListView(TestMixing, TestCase):
         response = self.client.get(reverse('leave_tracker:leave_list'))
         self.assertTrue(response.status_code, 200)
 
+    def test_template_used(self):
+        self.client.login(**self.credentials)
+        self.client.get(reverse('daily_tracker:login'))
+
+        response = self.client.get(reverse('leave_tracker:leave_list'))
+        self.assertTemplateUsed(response,'leave_tracker/leave_list.html')
+
+
 
 class TestLeaveDetailView(TestMixing, TestCase):
     def test_unauthorized_access(self):
