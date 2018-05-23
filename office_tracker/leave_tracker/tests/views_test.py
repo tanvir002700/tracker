@@ -97,8 +97,18 @@ class TestLeaveCreateView(TestMixing, TestCase):
         self.assertEqual(Leave.objects.count(), 1)
 
 
-class TestLeaveUpdateView(TestCase):
-    pass
+class TestLeaveUpdateView(TestMixing, TestCase):
+    def test_unauthorized_access(self):
+        response = self.client.get(reverse('leave_tracker:update', kwargs={'pk': self.sick_leave.id}))
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/leave_tracker/'+str(self.sick_leave.id)+'/update/',
+                             status_code=302, target_status_code=200)
+
+    def test_authorize_access(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:update', kwargs={'pk': self.sick_leave.id}))
+        self.assertTrue(response.status_code, 200)
 
 
 class TestLeaveDeleteView(TestCase):
