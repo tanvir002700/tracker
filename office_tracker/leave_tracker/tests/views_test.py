@@ -110,6 +110,15 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         response = self.client.get(reverse('leave_tracker:update', kwargs={'pk': self.sick_leave.id}))
         self.assertTrue(response.status_code, 200)
 
+    def test_get(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:update', kwargs={'pk': self.sick_leave.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'csrfmiddlewaretoken')
+        self.assertTemplateUsed(response, 'leave_tracker/leave_form.html')
+
+
 
 class TestLeaveDeleteView(TestCase):
     pass
