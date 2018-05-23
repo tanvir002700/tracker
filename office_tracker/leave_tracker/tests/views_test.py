@@ -118,7 +118,37 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         self.assertContains(response, 'csrfmiddlewaretoken')
         self.assertTemplateUsed(response, 'leave_tracker/leave_form.html')
 
+    def test_post(self):
+        casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
+                                          date_from=datetime.now(), date_to=datetime.now())
+        self.client.login(**self.credentials)
+
+        print(casual_leave.id)
+        response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
+                                    {'leave_type': Leave.SICK_LEAVE,
+                                     'leave_reason': 'update',
+                                     'date_form': datetime.now(),
+                                     'date_to': datetime.now()
+                                     }
+                                    )
+        self.assertEqual(response.status_code, 200)
+        casual_leave.refresh_from_db()
+        print(casual_leave.status)
+        print(casual_leave.leave_type)
+        print(response)
+        self.assertEqual(casual_leave.leave_reason, 'update')
 
 
-class TestLeaveDeleteView(TestCase):
-    pass
+class TestLeaveDeleteView(TestMixing, TestCase):
+    def test_unauthorized_access(self):
+        response = self.client.get(reverse('leave_tracker:delete', kwargs={'pk': self.sick_leave.id}))
+        self.assertRedirects(response,
+                             expected_url='/accounts/login/?next=/leave_tracker/'+str(self.sick_leave.id)+'/delete/',
+                             status_code=302, target_status_code=200)
+
+    def test_authorize_access(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:update', kwargs={'pk': self.sick_leave.id}))
+        self.assertTrue(response.status_code, 200)
+
