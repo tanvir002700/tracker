@@ -161,3 +161,9 @@ class TestLeaveDeleteView(TestMixing, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'leave_tracker/leave_confirm_delete.html')
 
+    def test_post(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': self.sick_leave.id}))
+        self.assertRedirects(response, reverse('leave_tracker:leave_list'), status_code=302)
+
