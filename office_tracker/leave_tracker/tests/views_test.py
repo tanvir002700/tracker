@@ -76,12 +76,26 @@ class TestLeaveCreateView(TestMixing, TestCase):
 
         response = self.client.get(reverse('leave_tracker:create'))
         self.assertTrue(response.status_code, 200)
+
     def test_get(self):
         self.client.login(**self.credentials)
 
         response = self.client.get(reverse('leave_tracker:create'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'csrfmiddlewaretoken')
+        self.assertTemplateUsed(response, 'leave_tracker/leave_form.html')
+
+    def test_post(self):
+        self.client.login(**self.credentials)
+
+        response = self.client.post(reverse('leave_tracker:create'),{'leave_type': Leave.SICK_LEAVE,
+                                                                      'leave_reason': 'test',
+                                                                      'date_form': datetime.now(),
+                                                                      'date_to': datetime.now()
+                                                                      })
+        self.assertTrue(response.status_code, 200)
+        self.assertEqual(Leave.objects.count(), 1)
+
 
 class TestLeaveUpdateView(TestCase):
     pass
