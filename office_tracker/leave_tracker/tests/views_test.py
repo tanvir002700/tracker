@@ -3,6 +3,7 @@ from django.test import TestCase, RequestFactory
 from unittest import skip
 from django.contrib.auth.models import AnonymousUser
 from datetime import datetime
+from django.contrib.messages import get_messages
 
 from accounts.models import User
 from leave_tracker.models import Leave
@@ -166,4 +167,16 @@ class TestLeaveDeleteView(TestMixing, TestCase):
 
         response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': self.sick_leave.id}))
         self.assertRedirects(response, reverse('leave_tracker:leave_list'), status_code=302)
+
+    def test_approved_leave_prevent_delete(self):
+        casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
+                                          date_from=datetime.now(), date_to=datetime.now(), status=Leave.APPROVED)
+
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(response.status_code, 302)
+
 
