@@ -179,4 +179,15 @@ class TestLeaveDeleteView(TestMixing, TestCase):
         self.assertEqual(str(messages[0]), 'cant update')
         self.assertEqual(response.status_code, 302)
 
+    def test_canceled_leave_prevent_delete(self):
+        casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
+                                          date_from=datetime.now(), date_to=datetime.now(), status=Leave.CANCELED)
+
+        self.client.login(**self.credentials)
+
+        response = self.client.get(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(response.status_code, 302)
+
 
