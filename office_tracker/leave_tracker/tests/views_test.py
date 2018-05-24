@@ -120,26 +120,26 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         self.assertContains(response, 'csrfmiddlewaretoken')
         self.assertTemplateUsed(response, 'leave_tracker/leave_form.html')
 
-    @skip("need to fix this")
     def test_post(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
                                           date_from=datetime.now(), date_to=datetime.now())
+        ob = Leave.objects.get(pk=casual_leave.id)
         self.client.login(**self.credentials)
 
-        print(casual_leave.id)
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
-                                    {'leave_type': Leave.SICK_LEAVE,
+                                    {'leave_type': 'SK',
                                      'leave_reason': 'update',
-                                     'date_form': datetime.now(),
-                                     'date_to': datetime.now()
+                                     'date_from': datetime.now().date(),
+                                     'date_to': datetime.now().date()
                                      }
                                     )
-        self.assertEqual(response.status_code, 200)
+
         casual_leave.refresh_from_db()
-        print(casual_leave.status)
-        print(casual_leave.leave_type)
-        print(response)
+        self.assertEqual(response.status_code, 302)
+        messages = list(get_messages(response.wsgi_request))
         self.assertEqual(casual_leave.leave_reason, 'update')
+        self.assertEqual(casual_leave.leave_type, 'SK')
+        self.assertEqual(str(messages[0]), 'successfully update')
 
 
 class TestLeaveDeleteView(TestMixing, TestCase):
