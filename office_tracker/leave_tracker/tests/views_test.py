@@ -167,6 +167,8 @@ class TestLeaveDeleteView(TestMixing, TestCase):
 
         response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': self.sick_leave.id}))
         self.assertRedirects(response, reverse('leave_tracker:leave_list'), status_code=302)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'successfully update')
 
     def test_approved_leave_prevent_delete(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
