@@ -92,11 +92,11 @@ class TestLeaveCreateView(TestMixing, TestCase):
 
         response = self.client.post(reverse('leave_tracker:create'),{'leave_type': Leave.SICK_LEAVE,
                                                                       'leave_reason': 'test',
-                                                                      'date_form': datetime.now(),
-                                                                      'date_to': datetime.now()
+                                                                      'date_from': datetime.now().date(),
+                                                                      'date_to': datetime.now().date()
                                                                       })
         self.assertTrue(response.status_code, 200)
-        self.assertEqual(Leave.objects.count(), 1)
+        self.assertEqual(Leave.objects.count(), 2)
 
 
 class TestLeaveUpdateView(TestMixing, TestCase):
