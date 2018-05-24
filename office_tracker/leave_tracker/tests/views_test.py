@@ -141,6 +141,45 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         self.assertEqual(casual_leave.leave_type, 'SK')
         self.assertEqual(str(messages[0]), 'successfully update')
 
+    def test_approved_leave_prevent_update(self):
+        casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
+                                            date_from=datetime.now().date(), date_to=datetime.now().date(),
+                                            status=Leave.APPROVED)
+        ob = Leave.objects.get(pk=casual_leave.id)
+        self.client.login(**self.credentials)
+
+        response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
+                                    {'leave_type': 'SK',
+                                     'leave_reason': 'update',
+                                     'date_from': datetime.now().date(),
+                                     'date_to': datetime.now().date()
+                                     }
+                                    )
+
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(response.status_code, 302)
+
+    def test_cancled_leave_prevent_update(self):
+        casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
+                                            date_from=datetime.now().date(), date_to=datetime.now().date(),
+                                            status=Leave.CANCELED)
+        ob = Leave.objects.get(pk=casual_leave.id)
+        self.client.login(**self.credentials)
+
+        response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
+                                    {'leave_type': 'SK',
+                                     'leave_reason': 'update',
+                                     'date_from': datetime.now().date(),
+                                     'date_to': datetime.now().date()
+                                     }
+                                    )
+
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(response.status_code, 302)
+
+
 
 class TestLeaveDeleteView(TestMixing, TestCase):
     def test_unauthorized_access(self):
