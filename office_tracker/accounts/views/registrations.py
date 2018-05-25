@@ -1,11 +1,10 @@
 from django.views.generic.edit import FormView
-from accounts.forms import RegistrationForm
 from django.views.generic.edit import UpdateView
-from accounts.forms import RegistrationForm, AccountUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from accounts.forms import RegistrationForm, AccountUpdateForm
 
 class RegistrationView(FormView):
     template_name = 'accounts/registration.html'
@@ -16,8 +15,8 @@ class RegistrationView(FormView):
         user = form.save()
         if user:
             return redirect(reverse_lazy('accounts:detail'))
-        else:
-            return render(request, self.template_name, {'form': form})
+
+        return render(request, self.template_name, {'form': form})
 
 
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
@@ -37,4 +36,3 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return self.request.user
-

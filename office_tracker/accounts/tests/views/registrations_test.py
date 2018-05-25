@@ -34,6 +34,19 @@ class RegisterViewTest(TestCase):
 
 
 class DetailViewTest(TestMixing, TestCase):
+    def test_unauthorized_access(self):
+        response = self.client.get(reverse('accounts:detail'))
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/accounts/detail/',
+                             status_code=302, target_status_code=200)
+
+    def test_authorize_access(self):
+        self.client.login(**self.credentials)
+        self.client.get(reverse('accounts:login'))
+
+        response = self.client.get(reverse('accounts:detail'))
+        self.assertTrue(response.status_code, 200)
+
+
     def test_get(self):
         request = self.factory.get('/accounts/detail')
         request.user = self.user

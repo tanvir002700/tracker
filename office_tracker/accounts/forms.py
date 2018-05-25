@@ -5,7 +5,7 @@ from .models import User
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    class Meta:
+    class Meta(object):
         model = User
         fields = ('username', 'email')
 
@@ -19,7 +19,7 @@ class RegistrationForm(UserCreationForm):
 
 
 class AccountUpdateForm(ModelForm):
-    class Meta:
+    class Meta(object):
         model = User
         fields = ['first_name', 'last_name', 'email']
 

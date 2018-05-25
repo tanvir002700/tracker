@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 
-class LoginView(LoginView):
+class UserLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'accounts/login.html'
 
@@ -9,7 +9,7 @@ class LoginView(LoginView):
         return reverse_lazy('root')
 
 
-class LogoutView(LogoutView):
+class UserLogoutView(LogoutView):
     template_name = 'accounts/logout.html'
 
     def get_next_page(self):
