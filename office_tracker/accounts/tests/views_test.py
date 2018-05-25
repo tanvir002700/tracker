@@ -3,7 +3,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 
 from accounts.models import User
-from accounts.views import AccountDetailView, AccountUpdateView
+from accounts.views.registrations import AccountDetailView, AccountUpdateView
 
 class TestMixing(object):
     def setUp(self):
