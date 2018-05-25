@@ -3,7 +3,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 
 from accounts.models import User
-from accounts.views.registrations import AccountDetailView, AccountUpdateView
+from accounts.views.registrations import UserDetailView, UserUpdateView
 
 class TestMixing(object):
     def setUp(self):
@@ -51,7 +51,7 @@ class DetailViewTest(TestMixing, TestCase):
         request = self.factory.get('/accounts/detail')
         request.user = self.user
 
-        response = AccountDetailView.as_view()(request)
+        response = UserDetailView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
 
@@ -60,7 +60,7 @@ class UpdateViewTest(TestMixing, TestCase):
         request = self.factory.get('/accounts/update')
         request.user = self.user
 
-        response = AccountUpdateView.as_view()(request)
+        response = UserUpdateView.as_view()(request)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'csrfmiddlewaretoken')
 

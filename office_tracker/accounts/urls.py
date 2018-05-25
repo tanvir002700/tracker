@@ -1,14 +1,14 @@
 # pylint: disable=invalid-name
 from django.urls import path, re_path
-from .views.registrations import RegistrationView, AccountUpdateView, AccountDetailView
+from .views.registrations import UserRegistrationView, UserUpdateView, UserDetailView
 from .views.sessions import UserLoginView, UserLogoutView
 from .views.passwords import UserPasswordResetView, UserPasswordResetDoneView, UserPasswordResetConfirmView,\
                              UserPasswordResetCompleteView
 
 urlpatterns = [
-    path('detail/', AccountDetailView.as_view(), name='detail'),
-    path('update/', AccountUpdateView.as_view(), name='update'),
-    path('registration/', RegistrationView.as_view(), name='registration'),
+    path('detail/', UserDetailView.as_view(), name='detail'),
+    path('update/', UserUpdateView.as_view(), name='update'),
+    path('registration/', UserRegistrationView.as_view(), name='registration'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('logout', UserLogoutView.as_view(), name='logout'),
     path('password_reset/', UserPasswordResetView.as_view(), name='password_reset'),

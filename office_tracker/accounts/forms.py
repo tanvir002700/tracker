@@ -22,4 +22,3 @@ class AccountUpdateForm(ModelForm):
     class Meta(object):
         model = User
         fields = ['first_name', 'last_name', 'email']
-

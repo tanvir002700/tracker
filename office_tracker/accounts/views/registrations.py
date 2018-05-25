@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from accounts.forms import RegistrationForm, AccountUpdateForm
 
-class RegistrationView(FormView):
+class UserRegistrationView(FormView):
     template_name = 'accounts/registration.html'
     form_class = RegistrationForm
 
@@ -19,7 +19,7 @@ class RegistrationView(FormView):
         return render(request, self.template_name, {'form': form})
 
 
-class AccountUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'accounts/update.html'
     form_class = AccountUpdateForm
 
@@ -30,7 +30,7 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class AccountDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = 'accounts/detail.html'
     context_object_name = 'user'
 
