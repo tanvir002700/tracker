@@ -7,4 +7,3 @@ class TimeStampedModel(models.Model):
 
     class Meta(object):
         abstract = True
-

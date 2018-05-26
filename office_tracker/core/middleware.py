@@ -11,4 +11,3 @@ class TimezoneMiddleware(MiddlewareMixin):
             timezone.activate(pytz.timezone(self.tzname))
         else:
             timezone.activate(pytz.timezone('Asia/Dhaka'))
-
