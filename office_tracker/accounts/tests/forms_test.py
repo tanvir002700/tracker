@@ -1,6 +1,4 @@
-from django.urls import reverse
-from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.test import TestCase
 
 from accounts.forms import RegistrationForm
 
@@ -26,8 +24,8 @@ class RegistrationFormTest(TestMixing, TestCase):
 
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors, {
-                'username': ['This field is required.'],
-                'email': ['This field is required.'],
-                'password1': ['This field is required.'],
-                'password2': ['This field is required.'],
-            })
+            'username': ['This field is required.'],
+            'email': ['This field is required.'],
+            'password1': ['This field is required.'],
+            'password2': ['This field is required.'],
+        })

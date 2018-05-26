@@ -1,18 +1,9 @@
 from django.urls import reverse
-from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.test import TestCase
 
 from accounts.models import User
 from accounts.views.registrations import UserDetailView, UserUpdateView
-
-class TestMixing(object):
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(username='jacob', email='jacob@test.com', password='top_secret')
-        self.credentials = {
-            'username': 'jacob',
-            'password': 'top_secret'
-        }
+from accounts.tests.text_mixing import TestMixing
 
 
 class RegisterViewTest(TestCase):
@@ -77,5 +68,3 @@ class UpdateViewTest(TestMixing, TestCase):
         self.assertEqual(self.user.last_name, 'change')
         self.assertEqual(self.user.email, 'email@email.com')
         self.assertRedirects(response, expected_url=reverse('accounts:detail'), status_code=302, target_status_code=200)
-
-

@@ -1,9 +1,7 @@
-from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.test import TestCase
+from django.utils import timezone
 
 from accounts.models import User
-from daily_tracker.models import Attandance
-from django.utils import timezone
 
 class UserMixing(object):
     def create_user(self, username='test', email='test@email.com', password='top_secret'):

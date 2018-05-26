@@ -1,18 +1,7 @@
 from django.urls import reverse
-from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.test import TestCase
 
-from accounts.models import User
-
-class TestMixing(object):
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(username='jacob', email='jacob@test.com', password='top_secret')
-        self.credentials = {
-            'username': 'jacob',
-            'password': 'top_secret'
-        }
-
+from accounts.tests.text_mixing import TestMixing
 
 class LoginViewTest(TestMixing, TestCase):
 
@@ -32,5 +21,3 @@ class LogoutViewTest(TestMixing, TestCase):
 
         response = self.client.get(reverse('accounts:logout'))
         self.assertRedirects(response, expected_url=reverse('accounts:login'), status_code=302, target_status_code=200)
-
-
