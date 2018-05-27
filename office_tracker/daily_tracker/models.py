@@ -1,7 +1,7 @@
+from django.utils import timezone
 from django.db import models
 from core.models import TimeStampedModel
 from accounts.models import User
-from django.utils import timezone
 from .decorators import update_total_time
 
 

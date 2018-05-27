@@ -1,10 +1,9 @@
+from django.utils import timezone
 from django.urls import reverse
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
-from django.utils import timezone
 
 from accounts.models import User
-from daily_tracker.views import DailyLoginView, AttandanceListView
+from daily_tracker.views import AttandanceListView
 
 
 class TestMixing(object):
@@ -37,7 +36,7 @@ class DailyLoginViewTest(TestMixing, TestCase):
         self.client.login(**self.credentials)
         self.client.get(reverse('daily_tracker:login'))
 
-        response = self.client.get(reverse('daily_tracker:login'))
+        self.client.get(reverse('daily_tracker:login'))
         self.assertEqual(self.user.attandance_set.count(), 1)
 
 
@@ -46,7 +45,7 @@ class DailyLogoutViewTest(TestMixing, TestCase):
         self.user.attandance_set.create(enter_at=timezone.now())
         self.client.login(**self.credentials)
 
-        response = self.client.get(reverse('daily_tracker:logout'))
+        self.client.get(reverse('daily_tracker:logout'))
         self.assertFalse(self.user.is_active_login())
 
     def test_unauthorized_access(self):
@@ -60,7 +59,7 @@ class AttandanceListViewTest(TestMixing, TestCase):
     def test_one_entry(self):
         request = self.factory.get('/daily_tracker/attandance_list')
         request.user = self.user
-        attandance = self.user.attandance_set.create(enter_at=timezone.now())
+        self.user.attandance_set.create(enter_at=timezone.now())
 
         response = AttandanceListView.as_view()(request)
         self.assertEqual(response.status_code, 200)
