@@ -1,6 +1,6 @@
 from django.forms import ModelForm
-from .models import Leave
 from django import forms
+from .models import Leave
 
 
 class LeaveForm(ModelForm):
