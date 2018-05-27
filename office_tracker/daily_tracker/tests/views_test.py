@@ -20,14 +20,14 @@ class TestMixing(object):
 
 
 class DailyLoginViewTest(TestMixing, TestCase):
-    def test_when_user_logged_in(self):
+    def test_authorize_access(self):
         self.client.login(**self.credentials)
         response = self.client.get(reverse('daily_tracker:login'))
 
         self.assertRedirects(response, expected_url=reverse('daily_tracker:attandance_list'),
                              status_code=302, target_status_code=200)
 
-    def test_when_user_not_logged_in(self):
+    def test_unauthorized_access(self):
         response = self.client.get(reverse('daily_tracker:login'))
 
         self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/login/',
@@ -42,12 +42,18 @@ class DailyLoginViewTest(TestMixing, TestCase):
 
 
 class DailyLogoutViewTest(TestMixing, TestCase):
-    def test_when_user_logged_in(self):
+    def test_authorize_access(self):
         self.user.attandance_set.create(enter_at=timezone.now())
         self.client.login(**self.credentials)
 
         response = self.client.get(reverse('daily_tracker:logout'))
         self.assertFalse(self.user.is_active_login())
+
+    def test_unauthorized_access(self):
+        response = self.client.get(reverse('daily_tracker:logout'))
+
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/logout/',
+                             status_code=302, target_status_code=200)
 
 
 class AttandanceListViewTest(TestMixing, TestCase):
@@ -58,4 +64,3 @@ class AttandanceListViewTest(TestMixing, TestCase):
 
         response = AttandanceListView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-
