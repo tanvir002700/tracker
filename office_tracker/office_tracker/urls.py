@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.urls import path
 from django.contrib import admin
 from daily_tracker.views import AttandanceListView
@@ -22,8 +22,7 @@ from daily_tracker.views import AttandanceListView
 urlpatterns = [
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
-    url('leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
-    url('admin/', admin.site.urls),
-    url('', AttandanceListView.as_view(), name='root')
+    path('leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
+    path('admin/', admin.site.urls),
+    path('', AttandanceListView.as_view(), name='root')
 ]
-
