@@ -1,11 +1,18 @@
 from django.db import models
 from django.utils import timezone
 
+from accounts.models import User
+
 
 class Season(models.Model):
     title = models.TextField()
     total_leave = models.IntegerField(default=0)
+    users = models.ManyToManyField(User, through='UserSeason')
 
+
+class UserSeason(models.Model):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    season = models.ForeignKey(Season, on_delete=models.PROTECT)
 
 class Leave(models.Model):
     SICK_LEAVE = 'SK'
