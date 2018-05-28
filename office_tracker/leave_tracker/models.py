@@ -1,6 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
+
+class Season(models.Model):
+    title = models.TextField()
+    total_leave = models.IntegerField(default=0)
+
+
 class Leave(models.Model):
     SICK_LEAVE = 'SK'
     CAUSAL_LEAVE = 'CA'
