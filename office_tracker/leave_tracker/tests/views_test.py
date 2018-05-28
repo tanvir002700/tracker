@@ -1,13 +1,10 @@
+from datetime import datetime
 from django.urls import reverse
 from django.test import TestCase, RequestFactory
-from unittest import skip
-from django.contrib.auth.models import AnonymousUser
-from datetime import datetime
 from django.contrib.messages import get_messages
 
 from accounts.models import User
 from leave_tracker.models import Leave
-from leave_tracker.views import LeaveListView
 
 
 class TestMixing(object):
@@ -21,7 +18,7 @@ class TestMixing(object):
             'password': 'top_secret'
         }
         self.sick_leave = Leave.objects.create(leave_type=Leave.SICK_LEAVE, leave_reason='test',
-                                          date_from=datetime.now(), date_to=datetime.now())
+                                               date_from=datetime.now(), date_to=datetime.now())
 
 
 class TestLeaveListView(TestMixing, TestCase):
@@ -42,7 +39,7 @@ class TestLeaveListView(TestMixing, TestCase):
         self.client.get(reverse('daily_tracker:login'))
 
         response = self.client.get(reverse('leave_tracker:leave_list'))
-        self.assertTemplateUsed(response,'leave_tracker/leave_list.html')
+        self.assertTemplateUsed(response, 'leave_tracker/leave_list.html')
 
 
 
@@ -64,7 +61,7 @@ class TestLeaveDetailView(TestMixing, TestCase):
         self.client.get(reverse('daily_tracker:login'))
 
         response = self.client.get(reverse('leave_tracker:detail', kwargs={'pk': self.sick_leave.id}))
-        self.assertTemplateUsed(response,'leave_tracker/leave_detail.html')
+        self.assertTemplateUsed(response, 'leave_tracker/leave_detail.html')
 
 
 class TestLeaveCreateView(TestMixing, TestCase):
@@ -90,11 +87,14 @@ class TestLeaveCreateView(TestMixing, TestCase):
     def test_post(self):
         self.client.login(**self.credentials)
 
-        response = self.client.post(reverse('leave_tracker:create'),{'leave_type': Leave.SICK_LEAVE,
-                                                                      'leave_reason': 'test',
-                                                                      'date_from': datetime.now().date(),
-                                                                      'date_to': datetime.now().date()
-                                                                      })
+        response = self.client.post(reverse('leave_tracker:create'),
+                                    {
+                                        'leave_type': Leave.SICK_LEAVE,
+                                        'leave_reason': 'test',
+                                        'date_from': datetime.now().date(),
+                                        'date_to': datetime.now().date()
+                                    }
+                                   )
         self.assertTrue(response.status_code, 200)
         self.assertEqual(Leave.objects.count(), 2)
 
@@ -122,17 +122,17 @@ class TestLeaveUpdateView(TestMixing, TestCase):
 
     def test_post(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                          date_from=datetime.now(), date_to=datetime.now())
-        ob = Leave.objects.get(pk=casual_leave.id)
+                                            date_from=datetime.now(), date_to=datetime.now())
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
-                                    {'leave_type': 'SK',
-                                     'leave_reason': 'update',
-                                     'date_from': datetime.now().date(),
-                                     'date_to': datetime.now().date()
-                                     }
-                                    )
+                                    {
+                                        'leave_type': 'SK',
+                                        'leave_reason': 'update',
+                                        'date_from': datetime.now().date(),
+                                        'date_to': datetime.now().date()
+                                    }
+                                   )
 
         casual_leave.refresh_from_db()
         self.assertEqual(response.status_code, 302)
@@ -145,16 +145,16 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
                                             date_from=datetime.now().date(), date_to=datetime.now().date(),
                                             status=Leave.APPROVED)
-        ob = Leave.objects.get(pk=casual_leave.id)
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
-                                    {'leave_type': 'SK',
-                                     'leave_reason': 'update',
-                                     'date_from': datetime.now().date(),
-                                     'date_to': datetime.now().date()
-                                     }
-                                    )
+                                    {
+                                        'leave_type': 'SK',
+                                        'leave_reason': 'update',
+                                        'date_from': datetime.now().date(),
+                                        'date_to': datetime.now().date()
+                                    }
+                                   )
 
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(str(messages[0]), 'cant update')
@@ -164,16 +164,16 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
                                             date_from=datetime.now().date(), date_to=datetime.now().date(),
                                             status=Leave.CANCELED)
-        ob = Leave.objects.get(pk=casual_leave.id)
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
-                                    {'leave_type': 'SK',
-                                     'leave_reason': 'update',
-                                     'date_from': datetime.now().date(),
-                                     'date_to': datetime.now().date()
-                                     }
-                                    )
+                                    {
+                                        'leave_type': 'SK',
+                                        'leave_reason': 'update',
+                                        'date_from': datetime.now().date(),
+                                        'date_to': datetime.now().date()
+                                    }
+                                   )
 
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(str(messages[0]), 'cant update')
@@ -211,7 +211,7 @@ class TestLeaveDeleteView(TestMixing, TestCase):
 
     def test_approved_leave_prevent_delete(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                          date_from=datetime.now(), date_to=datetime.now(), status=Leave.APPROVED)
+                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.APPROVED)
 
         self.client.login(**self.credentials)
 
@@ -222,7 +222,7 @@ class TestLeaveDeleteView(TestMixing, TestCase):
 
     def test_canceled_leave_prevent_delete(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                          date_from=datetime.now(), date_to=datetime.now(), status=Leave.CANCELED)
+                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.CANCELED)
 
         self.client.login(**self.credentials)
 
@@ -230,5 +230,3 @@ class TestLeaveDeleteView(TestMixing, TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(str(messages[0]), 'cant update')
         self.assertEqual(response.status_code, 302)
-
-
