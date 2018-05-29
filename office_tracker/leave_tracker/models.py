@@ -14,6 +14,9 @@ class UserSeason(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     season = models.ForeignKey(Season, on_delete=models.PROTECT)
 
+    class Meta(object):
+        unique_together = ['user', 'season']
+
 
 class Leave(models.Model):
     SICK_LEAVE = 'SK'
