@@ -37,6 +37,7 @@ class Leave(models.Model):
     date_from = models.DateField(default=timezone.now)
     date_to = models.DateField(default=timezone.now)
     status = models.CharField(max_length=15, choices=STATUS, default=PENDING)
+    user_season = models.ForeignKey(UserSeason, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.leave_reason
