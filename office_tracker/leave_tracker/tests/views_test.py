@@ -92,11 +92,13 @@ class TestLeaveCreateView(TestMixing, TestCase):
                                         'leave_type': Leave.SICK_LEAVE,
                                         'leave_reason': 'test',
                                         'date_from': datetime.now().date(),
-                                        'date_to': datetime.now().date()
+                                        'date_to': datetime.now().date(),
+                                        'status': Leave.APPROVED
                                     }
                                    )
         self.assertTrue(response.status_code, 200)
         self.assertEqual(Leave.objects.count(), 2)
+        self.assertEqual(Leave.objects.last().status, Leave.PENDING)
 
 
 class TestLeaveUpdateView(TestMixing, TestCase):
