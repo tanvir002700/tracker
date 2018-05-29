@@ -4,10 +4,12 @@ from django.contrib import messages
 from .models import Leave
 
 class LeaveModifyMixin(object):
-    def dispatch(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         obj = self.get_object()
         if obj.status != Leave.PENDING:
             messages.add_message(self.request, messages.WARNING, 'cant update', 'danger')
             return redirect(reverse_lazy('leave_tracker:leave_list'))
+        print("come here....................")
         messages.add_message(self.request, messages.INFO, 'successfully update')
-        return super(LeaveModifyMixin, self).dispatch(request, *args, **kwargs)
+        print(type(messages))
+        return super(LeaveModifyMixin, self).post(request, *args, **kwargs)
