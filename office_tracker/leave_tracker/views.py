@@ -34,9 +34,12 @@ class LeaveUpdateView(LoginRequiredMixin, LeaveModifyMixin, UpdateView):
     form_class = LeaveForm
     success_url = reverse_lazy('leave_tracker:leave_list')
     success_message = 'successfully saved!!!!'
+    failed_message = "can't saved!!!!"
 
 
 class LeaveDeleteView(LoginRequiredMixin, LeaveModifyMixin, DeleteView):
     model = Leave
     template_name = 'leave_tracker/leave_confirm_delete.html'
     success_url = reverse_lazy('leave_tracker:leave_list')
+    success_message = 'successfully Delete!!!!'
+    failed_message = "can't Delete!!!!"
