@@ -27,20 +27,15 @@ class LeaveCreateView(LoginRequiredMixin, CreateView):
     form_class = LeaveForm
     success_url = reverse_lazy('leave_tracker:leave_list')
     object = None
-
+    user = None
 
     def form_valid(self, form):
-        print("form validity check...............")
         self.object = form.save(commit=False)
-        self.object.user_season = UserSeason.objects.first()
+        self.object.user_season = self.user.userseason_set.last()
         return super(LeaveCreateView, self).form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
-        print("ok")
-        print(request.user)
-        user = request.user
-        user_season = user.userseason_set.last()
-        print(user_season)
+        self.user = request.user
         return super(LeaveCreateView, self).dispatch(request, *args, **kwargs)
 
 
