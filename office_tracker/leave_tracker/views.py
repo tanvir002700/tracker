@@ -1,12 +1,15 @@
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from .models import Leave, UserSeason
+from django.contrib import messages
+
 from .forms import LeaveForm
+from .models import Leave
 from .viewmixins import LeaveModifyMixin
 
 
@@ -36,6 +39,9 @@ class LeaveCreateView(LoginRequiredMixin, CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
+        if self.user.userseason_set.count() == 0:
+            messages.add_message(self.request, messages.WARNING, 'There is no user season', 'danger')
+            return redirect(reverse_lazy('leave_tracker:leave_list'))
         return super(LeaveCreateView, self).dispatch(request, *args, **kwargs)
 
 
