@@ -1,3 +1,5 @@
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.db import models
 from django.utils import timezone
 
@@ -44,3 +46,16 @@ class Leave(models.Model):
 
     def __str__(self):
         return self.leave_reason
+
+
+@receiver(post_save, sender=User)
+def my_handler(sender, **kwargs):
+    print("Signals execute................")
+    instance = kwargs.get('instance')
+    print(instance)
+    current_season = Season.objects.last()
+    current_user_season = instance.userseason_set.last()
+    print(current_season and current_user_season is None)
+    if current_season and current_user_season is None:
+        print("set user season..............")
+        UserSeason.objects.create(user=instance, season=current_season)
