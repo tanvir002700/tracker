@@ -37,12 +37,12 @@ class LeaveCreateView(LoginRequiredMixin, CreateView):
         self.object.user_season = self.user.userseason_set.last()
         return super(LeaveCreateView, self).form_valid(form)
 
-    def dispatch(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         self.user = request.user
         if self.user.userseason_set.count() == 0:
             messages.add_message(self.request, messages.WARNING, 'There is no user season', 'danger')
             return redirect(reverse_lazy('leave_tracker:leave_list'))
-        return super(LeaveCreateView, self).dispatch(request, *args, **kwargs)
+        return super(LeaveCreateView, self).post(request, *args, **kwargs)
 
 
 class LeaveUpdateView(LoginRequiredMixin, LeaveModifyMixin, UpdateView):
