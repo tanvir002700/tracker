@@ -4,12 +4,13 @@ from django.test import TestCase, RequestFactory
 from django.contrib.messages import get_messages
 
 from accounts.models import User
-from leave_tracker.models import Leave
+from leave_tracker.models import Leave, Season
 
 
 class TestMixing(object):
     def setUp(self):
         self.factory = RequestFactory()
+        self.season = Season.objects.create()
         self.user = User.objects.create_user(username='jacob',
                                              email='jacob@test.com',
                                              password='top_secret')
@@ -18,7 +19,8 @@ class TestMixing(object):
             'password': 'top_secret'
         }
         self.sick_leave = Leave.objects.create(leave_type=Leave.SICK_LEAVE, leave_reason='test',
-                                               date_from=datetime.now(), date_to=datetime.now())
+                                               date_from=datetime.now(), date_to=datetime.now(),
+                                               user_season=self.user.userseason_set.last())
 
 
 class TestLeaveListView(TestMixing, TestCase):
@@ -124,7 +126,8 @@ class TestLeaveUpdateView(TestMixing, TestCase):
 
     def test_post(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                            date_from=datetime.now(), date_to=datetime.now())
+                                            date_from=datetime.now(), date_to=datetime.now(),
+                                            user_season=self.user.userseason_set.last())
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
@@ -141,12 +144,12 @@ class TestLeaveUpdateView(TestMixing, TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(casual_leave.leave_reason, 'update')
         self.assertEqual(casual_leave.leave_type, 'SK')
-        self.assertEqual(str(messages[0]), 'successfully update')
+        self.assertEqual(str(messages[0]), 'successfully saved!!!!')
 
     def test_approved_leave_prevent_update(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
                                             date_from=datetime.now().date(), date_to=datetime.now().date(),
-                                            status=Leave.APPROVED)
+                                            status=Leave.APPROVED, user_season=self.user.userseason_set.last())
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
@@ -159,13 +162,13 @@ class TestLeaveUpdateView(TestMixing, TestCase):
                                    )
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(str(messages[0]), "can't saved!!!!")
         self.assertEqual(response.status_code, 302)
 
     def test_cancled_leave_prevent_update(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
                                             date_from=datetime.now().date(), date_to=datetime.now().date(),
-                                            status=Leave.CANCELED)
+                                            status=Leave.CANCELED, user_season=self.user.userseason_set.last())
         self.client.login(**self.credentials)
 
         response = self.client.post(reverse('leave_tracker:update', kwargs={'pk': casual_leave.id}),
@@ -178,7 +181,7 @@ class TestLeaveUpdateView(TestMixing, TestCase):
                                    )
 
         messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(str(messages[0]), "can't saved!!!!")
         self.assertEqual(response.status_code, 302)
 
 
@@ -209,26 +212,29 @@ class TestLeaveDeleteView(TestMixing, TestCase):
         response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': self.sick_leave.id}))
         self.assertRedirects(response, reverse('leave_tracker:leave_list'), status_code=302)
         messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(str(messages[0]), 'successfully update')
+        self.assertEqual(str(messages[0]), "successfully Delete!!!!")
 
     def test_approved_leave_prevent_delete(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.APPROVED)
+                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.APPROVED,
+                                            user_season=self.user.userseason_set.last())
 
         self.client.login(**self.credentials)
 
-        response = self.client.get(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
+        response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
         messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(str(messages[0]), 'cant update')
+        print(messages)
+        self.assertEqual(str(messages[0]), "can't Delete!!!!")
         self.assertEqual(response.status_code, 302)
 
     def test_canceled_leave_prevent_delete(self):
         casual_leave = Leave.objects.create(leave_type=Leave.CAUSAL_LEAVE, leave_reason='test',
-                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.CANCELED)
+                                            date_from=datetime.now(), date_to=datetime.now(), status=Leave.CANCELED,
+                                            user_season=self.user.userseason_set.last())
 
         self.client.login(**self.credentials)
 
-        response = self.client.get(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
+        response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
         messages = list(get_messages(response.wsgi_request))
-        self.assertEqual(str(messages[0]), 'cant update')
+        self.assertEqual(str(messages[0]), "can't Delete!!!!")
         self.assertEqual(response.status_code, 302)
