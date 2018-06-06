@@ -18,6 +18,7 @@ class UserSeason(models.Model):
 
     class Meta(object):
         unique_together = ['user', 'season']
+        auto_created = True
 
 
 class Leave(models.Model):
@@ -58,4 +59,6 @@ def set_user_current_season(sender, **kwargs):
 
 @receiver(post_save, sender=Season)
 def assign_season_to_user(sender, **kwargs):
-    print("call assign season")
+    instance = kwargs.get('instance')
+    users = User.objects.all()
+    instance.users.add(*users)
