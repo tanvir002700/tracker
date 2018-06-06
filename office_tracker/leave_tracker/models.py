@@ -49,13 +49,9 @@ class Leave(models.Model):
 
 
 @receiver(post_save, sender=User)
-def my_handler(sender, **kwargs):
-    print("Signals execute................")
+def set_user_current_season(sender, **kwargs):
     instance = kwargs.get('instance')
-    print(instance)
     current_season = Season.objects.last()
     current_user_season = instance.userseason_set.last()
-    print(current_season and current_user_season is None)
     if current_season and current_user_season is None:
-        print("set user season..............")
         UserSeason.objects.create(user=instance, season=current_season)
