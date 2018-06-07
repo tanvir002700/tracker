@@ -61,4 +61,8 @@ def set_user_current_season(sender, **kwargs):
 def assign_season_to_user(sender, **kwargs):
     instance = kwargs.get('instance')
     users = User.objects.all()
-    instance.users.add(*users)
+    user_seasons = []
+    for user in users:
+        user_seasons.append(UserSeason(user=user, season=instance))
+    print(len(user_seasons))
+    UserSeason.objects.bulk_create(user_seasons)
