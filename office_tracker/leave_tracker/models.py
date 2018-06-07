@@ -3,16 +3,17 @@ from django.dispatch import receiver
 from django.db import models
 from django.utils import timezone
 
+from core.models import TimeStampedModel
 from accounts.models import User
 
 
-class Season(models.Model):
+class Season(TimeStampedModel):
     title = models.TextField()
     total_leave = models.IntegerField(default=0)
     users = models.ManyToManyField(User, through='UserSeason')
 
 
-class UserSeason(models.Model):
+class UserSeason(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     season = models.ForeignKey(Season, on_delete=models.PROTECT)
 
@@ -20,7 +21,7 @@ class UserSeason(models.Model):
         unique_together = ['user', 'season']
 
 
-class Leave(models.Model):
+class Leave(TimeStampedModel):
     SICK_LEAVE = 'SK'
     CAUSAL_LEAVE = 'CA'
     LEAVE_TYPE = (
