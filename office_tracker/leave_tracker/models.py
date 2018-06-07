@@ -18,7 +18,6 @@ class UserSeason(models.Model):
 
     class Meta(object):
         unique_together = ['user', 'season']
-        auto_created = True
 
 
 class Leave(models.Model):
