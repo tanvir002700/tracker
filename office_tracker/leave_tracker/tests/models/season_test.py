@@ -17,4 +17,5 @@ class TestMixing(object):
 
 
 class TestSeason(TestMixing, TestCase):
-    pass
+    def test_post_create_user_season_after_create_season(self):
+        self.assertEqual(self.season.users.count(), 1)
