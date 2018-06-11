@@ -56,4 +56,3 @@ def set_user_current_season(sender, **kwargs):
     current_user_season = instance.userseason_set.last()
     if current_season and current_user_season is None:
         UserSeason.objects.create(user=instance, season=current_season)
-
