@@ -57,11 +57,3 @@ def set_user_current_season(sender, **kwargs):
     if current_season and current_user_season is None:
         UserSeason.objects.create(user=instance, season=current_season)
 
-@receiver(post_save, sender=Season)
-def assign_season_to_user(sender, **kwargs):
-    instance = kwargs.get('instance')
-    users = User.objects.all()
-    user_seasons = []
-    for user in users:
-        user_seasons.append(UserSeason(user=user, season=instance))
-    UserSeason.objects.bulk_create(user_seasons)
