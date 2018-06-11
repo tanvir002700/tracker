@@ -47,12 +47,3 @@ class Leave(TimeStampedModel):
 
     def __str__(self):
         return self.leave_reason
-
-
-@receiver(post_save, sender=User)
-def set_user_current_season(sender, **kwargs):
-    instance = kwargs.get('instance')
-    current_season = Season.objects.last()
-    current_user_season = instance.userseason_set.last()
-    if current_season and current_user_season is None:
-        UserSeason.objects.create(user=instance, season=current_season)
