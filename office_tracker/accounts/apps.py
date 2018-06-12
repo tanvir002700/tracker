@@ -7,6 +7,5 @@ class AccountsConfig(AppConfig):
     name = 'accounts'
 
     def ready(self):
-        print("ready account config")
         User = apps.get_model('accounts', 'User')
         post_save.connect(set_user_current_season, sender=User)
