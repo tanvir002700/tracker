@@ -1,6 +1,6 @@
 from django.apps import apps
 
-def set_user_current_season(sender, **kwargs):
+def set_user_current_season(**kwargs):
     instance = kwargs.get('instance')
     current_season = apps.get_model('leave_tracker', 'Season').objects.last()
     UserSeason = apps.get_model('leave_tracker', 'UserSeason')
