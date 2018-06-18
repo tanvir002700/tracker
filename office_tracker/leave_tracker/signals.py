@@ -1,6 +1,6 @@
 from django.apps import apps
 
-def assign_season_to_all_user(sender, **kwargs):
+def assign_season_to_all_user(**kwargs):
     instance = kwargs.get('instance')
     User = apps.get_model('accounts', 'User')
     UserSeason = apps.get_model('leave_tracker', 'UserSeason')
