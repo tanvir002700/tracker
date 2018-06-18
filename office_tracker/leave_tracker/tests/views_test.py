@@ -223,7 +223,6 @@ class TestLeaveDeleteView(TestMixing, TestCase):
 
         response = self.client.post(reverse('leave_tracker:delete', kwargs={'pk': casual_leave.id}))
         messages = list(get_messages(response.wsgi_request))
-        print(messages)
         self.assertEqual(str(messages[0]), "can't Delete!!!!")
         self.assertEqual(response.status_code, 302)
 
