@@ -3,7 +3,7 @@
 # tracker
 
 ## Database setup
-
+```
 $sudo su - postgres
 $psql
 
@@ -19,6 +19,7 @@ GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 \q
 
 exit
+```
 
 # run test
 python manage.py test --pattern='*test.py'
