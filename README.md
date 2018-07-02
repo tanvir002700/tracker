@@ -20,6 +20,10 @@ GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 
 exit
 ```
+## run application in developement
+```
+python manage.py runserver --settings=office_tracker.settings.local
+```
+## run test
+python manage.py test --settings=office_tracker.settings.local --pattern='*test.py'
 
-# run test
-python manage.py test --pattern='*test.py'
