@@ -27,3 +27,7 @@ python manage.py runserver --settings=office_tracker.settings.local
 ## run test
 python manage.py test --settings=office_tracker.settings.local --pattern='*test.py'
 
+## Run Docker
+
+docker run -d -e POSTGRES_USER='app' -e POSTGRES_PASSWORD='app' -e POSTGRES_DB='traker' --net=api --name db postgres
+
