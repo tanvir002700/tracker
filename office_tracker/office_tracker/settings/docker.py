@@ -18,8 +18,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'traker',
-        'USER': 'django',
-        'PASSWORD': 'password',
+        'USER': 'app',
+        'PASSWORD': 'app',
         'HOST': 'db',
         'PORT': '',
     }
