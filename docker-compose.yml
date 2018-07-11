@@ -10,3 +10,11 @@ services:
     env_file: .docker-env
     volumes:
       - db-data:/var/lib/postgresql/db-data
+
+  app:
+    build: .
+    env_file: .docker-env
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db

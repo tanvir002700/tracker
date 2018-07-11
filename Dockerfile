@@ -1,6 +1,6 @@
-MAINTAINER tanvir002700@gmail.com
-
 FROM python:3
+
+MAINTAINER tanvir002700@gmail.com
 
 ENV PYTHONUNBUFFERED 1
 
