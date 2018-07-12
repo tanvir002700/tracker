@@ -2,6 +2,13 @@ FROM python:3
 
 MAINTAINER tanvir002700@gmail.com
 
+RUN apt-get update -yqq \
+    && apt-get install -yqq --no-install-recommends \
+     build-essential \
+     python3-dev \
+     libevent-dev \
+    && rm -rf /var/lib/apt/lists
+
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /usr/src/app
