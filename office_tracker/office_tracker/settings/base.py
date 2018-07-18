@@ -32,6 +32,8 @@ def get_env_variable(var_name):
 
 # Application definition
 
+SECRET_KEY = get_env_variable('SECRET_KEY')
+
 INSTALLED_APPS = [
     'accounts',
     'core',
