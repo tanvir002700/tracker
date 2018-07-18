@@ -1,7 +1,5 @@
 from .base import *
 
-SECRET_KEY = '!ok^nac(io_tz+%kc0y&rj)a@1y04@&=g7+#u(_j#$6x^=c**+'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
