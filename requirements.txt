@@ -5,6 +5,7 @@ coverage==4.0.3
 cycler==0.10.0
 decorator==4.3.0
 Django==2.0.4
+djangorestframework==3.8.2
 greenlet==0.4.13
 idna==2.6
 ipdb==0.11
