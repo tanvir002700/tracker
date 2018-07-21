@@ -24,7 +24,7 @@ urlpatterns = [
     path('daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
     path('leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
     path('api/api-auth', include('rest_framework.urls')),
-    path('api/', include(('api.v1.urls', 'api'), namespace='api')),
+    path('api/v1/', include(('api.v1.urls', 'api'), namespace='api')),
     path('admin/', admin.site.urls),
     path('', AttandanceListView.as_view(), name='root')
 ]
