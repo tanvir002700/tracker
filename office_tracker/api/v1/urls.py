@@ -1,5 +1,11 @@
 from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework import routers
+from .daily_tracker.views import AttandanceList
+
+router = routers.DefaultRouter()
+router.register(r'daily_trackers', AttandanceList)
 
 urlpatterns = [
-    path('daily_tracker/', include(('api.v1.daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
+    path(r'', include(router.urls))
 ]
