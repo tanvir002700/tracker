@@ -29,7 +29,7 @@ class DailyLoginViewTest(TestMixing, TestCase):
     def test_unauthorized_access(self):
         response = self.client.get(reverse('daily_tracker:login'))
 
-        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/login/',
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/attandances/login',
                              status_code=302, target_status_code=200)
 
     def test_multiple_login(self):
@@ -51,7 +51,7 @@ class DailyLogoutViewTest(TestMixing, TestCase):
     def test_unauthorized_access(self):
         response = self.client.get(reverse('daily_tracker:logout'))
 
-        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/logout/',
+        self.assertRedirects(response, expected_url='/accounts/login/?next=/daily_tracker/attandances/logout',
                              status_code=302, target_status_code=200)
 
 

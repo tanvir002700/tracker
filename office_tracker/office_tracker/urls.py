@@ -21,7 +21,7 @@ from daily_tracker.views import AttandanceListView
 
 urlpatterns = [
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    path('daily_tracker/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
+    path('daily_tracker/attandances/', include(('daily_tracker.urls', 'daily_tracker'), namespace='daily_tracker')),
     path('leave_tracker/', include(('leave_tracker.urls', 'leave_tracker'), namespace='leave_tracker')),
     path('api/api-auth', include('rest_framework.urls')),
     path('api/v1/', include(('api.v1.urls', 'api'), namespace='api')),
