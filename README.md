@@ -28,15 +28,22 @@ python manage.py runserver --settings=office_tracker.settings.local
 python manage.py test --settings=office_tracker.settings.local --pattern='*test.py'
 
 ## Run Docker
+```bash
+docker build -t app .
+
+docker network create test
 
 docker run -d -e POSTGRES_USER='app' -e POSTGRES_PASSWORD='app' -e POSTGRES_DB='traker' --net=test --name db postgres
 
+docker run -it --net=test app bash -c 'cd office_tracker && python manage.py migrate --settings=office_tracker.settings.docker'
+
 docker run -it --net=test -p 8000:8000 --name=dj app
-
+```
 ## Run Docker-Compose
-
+``` bash
 docker-compose build
 
 docker-compose up
 
 docker-compose run app bash -c 'cd office_tracker && python manage.py migrate --settings=office_tracker.settings.docker'
+```
