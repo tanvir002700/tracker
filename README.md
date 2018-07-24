@@ -37,4 +37,4 @@ docker run -it --net=test -p 8000:8000 --name=dj app
 docker-compose build
 docker-compose up
 
-docker-compose run app python office_tracker/manage.py migrate --settings=office_tracker.settings.docker
+docker-compose run app bash -c 'cd office_tracker && python manage.py migrate --settings=office_tracker.settings.docker'
