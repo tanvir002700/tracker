@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'core.middleware.TimezoneMiddleware'
 ]
 
-ROOT_URLCONF = 'office_tracker.urls'
+ROOT_URLCONF = 'config.urls'
 AUTH_USER_MODEL = 'accounts.User'
 
 TEMPLATES = [
@@ -85,7 +85,7 @@ STATICFILES_DIRS = [
     'static/',
 ]
 
-WSGI_APPLICATION = 'office_tracker.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Password validation
