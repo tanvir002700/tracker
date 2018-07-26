@@ -5,8 +5,9 @@ coverage==4.0.3
 cycler==0.10.0
 decorator==4.3.0
 Django==2.0.4
+django-templated-mail==1.1.1
 djangorestframework==3.8.2
-djangorestframework-jwt==1.11.0
+djoser==1.2.0
 greenlet==0.4.13
 idna==2.6
 ipdb==0.11
@@ -15,6 +16,7 @@ ipython-genutils==0.2.0
 jedi==0.12.1
 matplotlib==2.0.2
 msgpack==0.5.6
+neovim==0.2.6
 numpy==1.14.5
 parso==0.3.1
 pexpect==4.6.0
@@ -25,7 +27,6 @@ psycopg2==2.7.4
 psycopg2-binary==2.7.4
 ptyprocess==0.6.0
 Pygments==2.2.0
-PyJWT==1.6.4
 pyparsing==2.2.0
 python-coveralls==2.9.1
 python-dateutil==2.6.1
