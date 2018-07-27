@@ -4,6 +4,6 @@ python:
 env:
   SECRET_KEY='!ok^nac(io_tz+%kc0y&rj)a@1y04@&=g7+#u(_j#$6x^=c**+'
 script:
-  - cd office_tracker && coverage run  manage.py test --settings=office_tracker.settings.travis --pattern='*_test.py'
+  - cd office_tracker && coverage run  manage.py test --settings=config.settings.travis --pattern='*_test.py'
 after_success:
   - coveralls
