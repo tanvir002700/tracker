@@ -1,5 +1,5 @@
 cycler==0.10.0
-Django==2.0.4
+Django==2.2.24
 greenlet==0.4.13
 matplotlib==2.0.2
 msgpack==0.5.6
